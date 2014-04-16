@@ -26,8 +26,8 @@
     <link rel="top" title="OpenAleaLab 1.0 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
+  <body>
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,7 +44,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <h1>Source code for openalea.core.package</h1><div class="highlight"><pre>
 <span class="c"># -*- python -*-</span>
@@ -279,6 +279,7 @@
 </div>
 <div class="viewcode-block" id="Package.add_factory"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_core.html#openalea.core.package.Package.add_factory">[docs]</a>    <span class="k">def</span> <span class="nf">add_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factory</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Add to the package a factory ( node or subgraph ) &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Factory </span><span class="si">%s</span><span class="s"> already defined. Ignored !&quot;</span> \
                 <span class="o">%</span> <span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">))</span>
@@ -291,7 +292,6 @@
         <span class="c"># oops: this is a hack.</span>
         <span class="c"># When the factory is a data factory that do not reference a file, raise an error.</span>
         <span class="c"># This function return True or raise an error to have a specific diagnostic.</span>
-        <span class="n">factory</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">factory</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
 
@@ -865,9 +865,9 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none" role="search">
+<div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
       <input type="text" name="q" />
@@ -884,7 +884,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -897,9 +897,9 @@
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
+    <div class="footer">
         &copy; Copyright 2014, INRIA VirtualPlants.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

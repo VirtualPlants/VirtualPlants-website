@@ -26,8 +26,8 @@
     <link rel="top" title="OpenAleaLab 1.0 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
+  <body>
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,7 +44,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <h1>Source code for openalea.visualea.node_treeview</h1><div class="highlight"><pre>
 <span class="c"># -*- python -*-</span>
@@ -682,7 +682,7 @@
 
         <span class="k">if</span><span class="p">(</span><span class="n">ret</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span>
             <span class="n">dialog</span><span class="o">.</span><span class="n">create_nodefactory</span><span class="p">(</span><span class="n">pman</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">()</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
 
 </div>
 <div class="viewcode-block" id="NodeFactoryView.add_composite_node"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.node_treeview.NodeFactoryView.add_composite_node">[docs]</a>    <span class="k">def</span> <span class="nf">add_composite_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -695,7 +695,7 @@
 
         <span class="k">if</span><span class="p">(</span><span class="n">ret</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span>
             <span class="n">newfactory</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">create_cnfactory</span><span class="p">(</span><span class="n">pman</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">()</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
 
 </div>
 <div class="viewcode-block" id="NodeFactoryView.add_data"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.node_treeview.NodeFactoryView.add_data">[docs]</a>    <span class="k">def</span> <span class="nf">add_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -708,7 +708,7 @@
 
         <span class="k">if</span><span class="p">(</span><span class="n">ret</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span>
             <span class="n">newfactory</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">create_datafactory</span><span class="p">(</span><span class="n">pman</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">()</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
 
 
 </div>
@@ -738,7 +738,7 @@
             <span class="k">return</span>
 
         <span class="k">del</span> <span class="n">pman</span><span class="p">[</span><span class="n">pkg</span><span class="o">.</span><span class="n">get_id</span><span class="p">()]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">()</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
 
 
 </div>
@@ -752,7 +752,7 @@
         <span class="n">pix</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
         <span class="n">pkg</span><span class="o">.</span><span class="n">set_icon</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">()</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
 
 </div>
 <div class="viewcode-block" id="NodeFactoryView.edit_pkg_code"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.node_treeview.NodeFactoryView.edit_pkg_code">[docs]</a>    <span class="k">def</span> <span class="nf">edit_pkg_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -784,7 +784,7 @@
             <span class="k">return</span>
 
         <span class="n">pman</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">pkg</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">()</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
 
 </div>
 <div class="viewcode-block" id="NodeFactoryView.duplicate_package"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.node_treeview.NodeFactoryView.duplicate_package">[docs]</a>    <span class="k">def</span> <span class="nf">duplicate_package</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -808,7 +808,7 @@
             <span class="n">newpkg</span> <span class="o">=</span> <span class="n">pman</span><span class="o">.</span><span class="n">create_user_package</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">metainfo</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
             <span class="n">newpkg</span><span class="o">.</span><span class="n">clone_from_package</span><span class="p">(</span><span class="n">pkg</span><span class="p">)</span>
             <span class="n">pman</span><span class="o">.</span><span class="n">add_package</span><span class="p">(</span><span class="n">newpkg</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">()</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
 
 </div>
 <div class="viewcode-block" id="NodeFactoryView.move_package"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.node_treeview.NodeFactoryView.move_package">[docs]</a>    <span class="k">def</span> <span class="nf">move_package</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -831,7 +831,7 @@
             <span class="n">new_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
             <span class="n">old_name</span> <span class="o">=</span> <span class="n">pkg</span><span class="o">.</span><span class="n">name</span>
             <span class="n">pman</span><span class="o">.</span><span class="n">rename_package</span><span class="p">(</span><span class="n">old_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">()</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
 
 
 
@@ -943,10 +943,9 @@
 
             <span class="k">del</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">package</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
             <span class="n">obj</span><span class="o">.</span><span class="n">package</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="NodeFactoryView.reinit_treeview"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.node_treeview.NodeFactoryView.reinit_treeview">[docs]</a>    <span class="k">def</span> <span class="nf">reinit_treeview</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">()</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_win</span><span class="p">()</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
+
+
 
 </div></div>
 <div class="viewcode-block" id="NodeFactoryTreeView"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.node_treeview.NodeFactoryTreeView">[docs]</a><span class="k">class</span> <span class="nc">NodeFactoryTreeView</span><span class="p">(</span><span class="n">NodeFactoryView</span><span class="p">,</span> <span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTreeView</span><span class="p">):</span>
@@ -1117,9 +1116,9 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none" role="search">
+<div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
       <input type="text" name="q" />
@@ -1136,7 +1135,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -1149,9 +1148,9 @@
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
+    <div class="footer">
         &copy; Copyright 2014, INRIA VirtualPlants.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

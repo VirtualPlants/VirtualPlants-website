@@ -26,8 +26,8 @@
     <link rel="top" title="OpenAleaLab 1.0 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
+  <body>
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,7 +44,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <h1>Source code for openalea.grapheditor.base</h1><div class="highlight"><pre>
 <span class="c"># -*- python -*-</span>
@@ -63,10 +63,12 @@
 <span class="c">#</span>
 <span class="c">###############################################################################</span>
 
+<span class="kn">import</span> <span class="nn">types</span>
+<span class="kn">from</span> <span class="nn">openalea.grapheditor</span> <span class="kn">import</span> <span class="n">interfaces</span>
+
 
 <div class="viewcode-block" id="GraphAdapterBase"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_grapheditor.html#openalea.grapheditor.base.GraphAdapterBase">[docs]</a><span class="k">class</span> <span class="nc">GraphAdapterBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base class for adapter to graph&quot;&quot;&quot;</span>
-
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_graph</span><span class="p">(</span><span class="n">graph</span> <span class="k">if</span> <span class="n">graph</span> <span class="k">else</span> <span class="bp">self</span><span class="p">)</span>
 
@@ -82,9 +84,9 @@
 
 <span class="sd">        Upon succes it must emit the following event tuple:</span>
 <span class="sd">        (&quot;vertex_added&quot;, (&quot;vertex_type&quot;, vertex)).</span>
-<span class="sd">          * &quot;vertex-type&quot; is a vertex-type string defined in the strategy </span>
-<span class="sd">            used for a particular graph type.</span>
-<span class="sd">          * &quot;vertex&quot; is the **observable** object representing a vertex.</span>
+<span class="sd">        * &quot;vertex-type&quot; is a vertex-type string defined in the strategy</span>
+<span class="sd">        used for a particular graph type.</span>
+<span class="sd">        * vertex is the observable object representing a vertex.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </div>
@@ -97,7 +99,7 @@
 
 <span class="sd">        Upon success it must emit the following event tuple:</span>
 <span class="sd">        (&quot;vertex_removed&quot;, (vertex,)).</span>
-<span class="sd">          * vertex is the **observable** object representing a vertex.</span>
+<span class="sd">        *vertex if the observable object representing a vertex.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </div>
@@ -112,9 +114,9 @@
 
 <span class="sd">        Upon succes it must emit the following event tuple:</span>
 <span class="sd">        (&quot;edge_added&quot;, (&quot;edge_type&quot;, edge, sourceObs, targetObs)).</span>
-<span class="sd">          * &quot;edge-type&quot; is a edge-type string defined in the strategy</span>
-<span class="sd">            used for a particular graph type.</span>
-<span class="sd">          * edge, sourceObs and targetObs are the **observable** objects</span>
+<span class="sd">        * &quot;edge-type&quot; is a edge-type string defined in the strategy</span>
+<span class="sd">        used for a particular graph type.</span>
+<span class="sd">        * edge, sourceObs and targetObs are the observable objects</span>
 <span class="sd">        representing an egde and its two anchors.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
@@ -124,7 +126,7 @@
 
 <span class="sd">        Upon success it must emit the following event tuple:</span>
 <span class="sd">        (&quot;edge_removed&quot;, (edge,)).</span>
-<span class="sd">          * edge is the observable object representing an edge.</span>
+<span class="sd">        *edge if the observable object representing a edge.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </div>
@@ -237,9 +239,9 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none" role="search">
+<div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
       <input type="text" name="q" />
@@ -256,7 +258,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -269,9 +271,9 @@
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
+    <div class="footer">
         &copy; Copyright 2014, INRIA VirtualPlants.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

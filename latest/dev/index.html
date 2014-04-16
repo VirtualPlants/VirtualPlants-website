@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Development documents &mdash; OpenAleaLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/virtualplants.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="OpenAleaLab 1.0 documentation" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="development-documents">
+<h1>Development documents<a class="headerlink" href="#development-documents" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="roadmap">
+<h2>RoadMap<a class="headerlink" href="#roadmap" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Project</li>
+<li>Viewer</li>
+<li>3D World</li>
+<li>Application: archi + GUI</li>
+<li>Service Oriented Architecture</li>
+<li>Manager</li>
+<li>Controls / GUI</li>
+<li>Models/ Paradigms</li>
+<li>Config / Session</li>
+<li>Interaction</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="concepts">
+<h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="project">
+<h3>Project<a class="headerlink" href="#project" title="Permalink to this headline">¶</a></h3>
+<p>Resp: J. Coste</p>
+<p>Due Date: 18/04/2014</p>
+<p>Objective: Project in OpenAleaLab</p>
+<p>Issue: None</p>
+<div class="section" id="tasks">
+<h4>Tasks:<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>Project Documentation</dt>
+<dd><ul class="first last simple">
+<li>Get OpenAlea PEP</li>
+<li>Move vpltk doc here</li>
+<li>Tutorial / Screenshots</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>GUI integration</dt>
+<dd><p class="first last"># view
+# edit
+# create</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">Test on real project</p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="what-s-next">
+<h4>What&#8217;s Next:<a class="headerlink" href="#what-s-next" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>refactoring</dt>
+<dd><ul class="first last">
+<li><p class="first">define the role of a project</p>
+</li>
+<li><dl class="first docutils">
+<dt>abstract project vs concrete ones</dt>
+<dd><ul class="first last simple">
+<li>Project: Python project. Might be used in any scientific software.</li>
+<li>LabProject(Project),</li>
+<li>Independant Widget from the Application</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Lazy load: load in memory only what is edited.</p>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>features</dt>
+<dd><ul class="first last simple">
+<li>vcs integration (svn, git) (P1)</li>
+<li>different storage/representation strategies: directory, hdf5, bup, gzip, wheels, eggs, ftp</li>
+<li>Import using import hooks (PEP-0302)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="viewer">
+<h3>Viewer<a class="headerlink" href="#viewer" title="Permalink to this headline">¶</a></h3>
+<p>Resp: G. Baty</p>
+<p>Due Date: 25/04/2014</p>
+<p>Objective: 3D Viewer component</p>
+<p>Issue: None</p>
+<div class="section" id="id1">
+<h4>Tasks:<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>Defining the Viewer component</dt>
+<dd><ul class="first last simple">
+<li>interface (API)</li>
+<li>code</li>
+<li>review</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Integration in oalab</dt>
+<dd><ul class="first last simple">
+<li>compatibility with existing viewer</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Documentation</p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id2">
+<h4>What&#8217;s Next:<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul class="simple">
+<li>Mixing py_vtk &amp; PyQGLViewer in a same widget</li>
+<li>Principles of the interaction with object of the world</li>
+<li>Select an object</li>
+<li>Manage layers</li>
+<li>Manage transparency</li>
+<li>Modal Interaction</li>
+<li>Introspection / Info on objects</li>
+<li>Edition mechanisms</li>
+<li>Camera path interpolation</li>
+<li>PlantGL Viewer backward compatibility</li>
+<li>WebGL viewer</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="application-gui">
+<h3>Application GUI<a class="headerlink" href="#application-gui" title="Permalink to this headline">¶</a></h3>
+<p>Resp: J. Coste, G. Baty</p>
+<p>Due Date: 28-30/04/2014</p>
+<p>Objective: Graphical structure + concepts</p>
+<p>Issue: None</p>
+<div class="section" id="id3">
+<h4>Tasks:<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul class="simple">
+<li>Grouping the widgets in a rational way</li>
+<li>Interaction between components (Drag/Drop)</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="application-archi">
+<h3>Application archi<a class="headerlink" href="#application-archi" title="Permalink to this headline">¶</a></h3>
+<p>Resp: G. Baty</p>
+<p>Due Date: 28-30/04/2014</p>
+<p>Objective: Graphical structure + concepts</p>
+<p>Issue: None</p>
+<div class="section" id="id4">
+<h4>Tasks:<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul class="simple">
+<li>Naming concepts</li>
+<li>one concept / one class</li>
+<li>the application define its components</li>
+<li>the components extend the application</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="service-oriented-architecture">
+<h3>Service Oriented Architecture<a class="headerlink" href="#service-oriented-architecture" title="Permalink to this headline">¶</a></h3>
+<p>Resp: C. Pradal</p>
+<p>Due Date: 15/05/2014</p>
+<p>Objective: Loose coupling and delegation</p>
+<div class="section" id="id5">
+<h4>Tasks:<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><ul>
+<li><p class="first">Definition of concepts: component, interface, service, adapters</p>
+</li>
+<li><dl class="first docutils">
+<dt>Service:</dt>
+<dd><ul class="first last simple">
+<li>absrtact class (interface)</li>
+<li>dump/load object (project)</li>
+<li>3D display</li>
+<li>Help</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">find Plugin</p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="release-openalealab">
+<h3>Release OpenAleaLab<a class="headerlink" href="#release-openalealab" title="Permalink to this headline">¶</a></h3>
+<p>Resp.: G. Baty and J. Costes</p>
+<p>Obj: PlantLab &amp; TissueLab</p>
+<blockquote>
+<div><ul class="simple">
+<li>Project</li>
+<li>Application Architecture (concepts)</li>
+<li>Application GUI</li>
+<li>world</li>
+<li>Viewer</li>
+<li>Paradigms (API, edit, run)</li>
+<li>shell</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="milestones">
+<h2>Milestones<a class="headerlink" href="#milestones" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="th-april">
+<h3>30th April<a class="headerlink" href="#th-april" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>OpenAleaLab alpha</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>project</dt>
+<dd><ul class="first last simple">
+<li>create</li>
+<li>edit (metadata, add elements)</li>
+<li>view</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">shell / exec</p>
+</li>
+<li><p class="first">paradigms</p>
+</li>
+<li><p class="first">Application</p>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="th-may">
+<h3>30th May<a class="headerlink" href="#th-may" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Concepts and their relationships</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Architecture</dt>
+<dd><ul class="first last simple">
+<li>Interface</li>
+<li>composants</li>
+<li>Service: Manager/Registration</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Controls</p>
+</li>
+<li><p class="first">Component GUI</p>
+</li>
+<li><p class="first">Visualea / OALab</p>
+</li>
+<li><p class="first">LPy / OALab</p>
+</li>
+<li><p class="first">Drag/Drop</p>
+</li>
+<li><p class="first">World / Viewer</p>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="th-june">
+<h3>15th June<a class="headerlink" href="#th-june" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>OpenAleaLab replaces VisuAlea and L-Py</dt>
+<dd><ul class="first last simple">
+<li>Tutorials</li>
+<li>Test / Debug</li>
+<li>Documentation / Installation</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Development documents</a><ul>
+<li><a class="reference internal" href="#roadmap">RoadMap</a></li>
+<li><a class="reference internal" href="#concepts">Concepts</a><ul>
+<li><a class="reference internal" href="#project">Project</a><ul>
+<li><a class="reference internal" href="#tasks">Tasks:</a></li>
+<li><a class="reference internal" href="#what-s-next">What&#8217;s Next:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viewer">Viewer</a><ul>
+<li><a class="reference internal" href="#id1">Tasks:</a></li>
+<li><a class="reference internal" href="#id2">What&#8217;s Next:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#application-gui">Application GUI</a><ul>
+<li><a class="reference internal" href="#id3">Tasks:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#application-archi">Application archi</a><ul>
+<li><a class="reference internal" href="#id4">Tasks:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#service-oriented-architecture">Service Oriented Architecture</a><ul>
+<li><a class="reference internal" href="#id5">Tasks:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-openalealab">Release OpenAleaLab</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#milestones">Milestones</a><ul>
+<li><a class="reference internal" href="#th-april">30th April</a></li>
+<li><a class="reference internal" href="#th-may">30th May</a></li>
+<li><a class="reference internal" href="#th-june">15th June</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/latest/dev/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, INRIA VirtualPlants.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
