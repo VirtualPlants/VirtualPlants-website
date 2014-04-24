@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>openalea.oalab.plugins.r &mdash; OpenAleaLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/virtualplants.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="OpenAleaLab 1.0 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for openalea.oalab.plugins.r</h1><div class="highlight"><pre>
+<span class="c"># -*- python -*-</span>
+<span class="c">#</span>
+<span class="c">#       R Manager applet</span>
+<span class="c"># </span>
+<span class="c">#       OpenAlea.OALab: Multi-Paradigm GUI</span>
+<span class="c">#</span>
+<span class="c">#       Copyright 2013 INRIA - CIRAD - INRA</span>
+<span class="c">#</span>
+<span class="c">#       File author(s): Julien Coste &lt;julien.coste@inria.fr&gt;</span>
+<span class="c">#</span>
+<span class="c">#       File contributor(s):</span>
+<span class="c">#</span>
+<span class="c">#       Distributed under the Cecill-C License.</span>
+<span class="c">#       See accompanying file LICENSE.txt or copy at</span>
+<span class="c">#           http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.html</span>
+<span class="c">#</span>
+<span class="c">#       OpenAlea WebSite : http://openalea.gforge.inria.fr</span>
+<span class="c">#</span>
+<span class="c">###############################################################################</span>
+<span class="n">__revision__</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">openalea.oalab.editor.text_editor</span> <span class="kn">import</span> <span class="n">RichTextEditor</span> <span class="k">as</span> <span class="n">Editor</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.editor.highlight</span> <span class="kn">import</span> <span class="n">Highlighter</span>
+    
+<div class="viewcode-block" id="RApplet"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.r.RApplet">[docs]</a><span class="k">class</span> <span class="nc">RApplet</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">default_name</span> <span class="o">=</span> <span class="s">&quot;R&quot;</span>
+    <span class="n">default_file_name</span> <span class="o">=</span> <span class="s">&quot;script.r&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;*.r&quot;</span>
+    <span class="n">extension</span> <span class="o">=</span> <span class="s">&quot;r&quot;</span>
+    <span class="n">icon</span> <span class="o">=</span> <span class="s">&quot;:/images/resources/RLogo.png&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;script.R&quot;</span><span class="p">,</span> <span class="n">script</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RApplet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span> <span class="o">=</span> <span class="n">Editor</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="n">controller</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+        <span class="n">Highlighter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">editor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">applet</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">session</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_step</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_animate</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init</span> <span class="o">=</span> <span class="bp">None</span>
+        
+        <span class="c"># TODO : Do it only once</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">runcode</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s">&quot;</span><span class="si">%lo</span><span class="s">ad_ext rmagic&quot;</span><span class="p">,</span> <span class="n">hidden</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="RApplet.focus_change"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.r.RApplet.focus_change">[docs]</a>    <span class="k">def</span> <span class="nf">focus_change</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set doc string in Help widget when focus changed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">&lt;H1&gt;&lt;IMG SRC=</span><span class="si">%s</span><span class="s"></span>
+<span class="s"> ALT=&quot;icon&quot;</span>
+<span class="s"> HEIGHT=25</span>
+<span class="s"> WIDTH=25</span>
+<span class="s"> TITLE=&quot;R logo&quot;&gt;R language&lt;/H1&gt;</span>
+
+<span class="s">more informations: http://www.r-project.org/</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">icon</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;HelpWidget&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="RApplet.widget"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.r.RApplet.widget">[docs]</a>    <span class="k">def</span> <span class="nf">widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the edition widget</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span>
+        </div>
+<div class="viewcode-block" id="RApplet.run_selected_part"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.r.RApplet.run_selected_part">[docs]</a>    <span class="k">def</span> <span class="nf">run_selected_part</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">get_selected_text</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span><span class="si">%%</span><span class="s">R</span>
+
+<span class="s">        &quot;&quot;&quot;</span> <span class="o">+</span> <span class="n">code</span>
+        <span class="n">interp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">get_interpreter</span><span class="p">()</span>
+        <span class="n">user_ns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">interpreter</span><span class="o">.</span><span class="n">user_ns</span>
+        <span class="n">interp</span><span class="o">.</span><span class="n">runcode</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>    
+        </div>
+<div class="viewcode-block" id="RApplet.run"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.r.RApplet.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span><span class="si">%%</span><span class="s">R</span>
+
+<span class="s">&quot;&quot;&quot;</span> <span class="o">+</span> <span class="n">code</span>
+        <span class="n">interp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">get_interpreter</span><span class="p">()</span>
+        <span class="n">user_ns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">interpreter</span><span class="o">.</span><span class="n">user_ns</span>
+        <span class="n">interp</span><span class="o">.</span><span class="n">runcode</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init</span> <span class="o">=</span> <span class="n">user_ns</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;init&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_step</span> <span class="o">=</span> <span class="n">user_ns</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;step&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_step</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_step</span> <span class="o">=</span> <span class="bp">None</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_animate</span> <span class="o">=</span> <span class="n">user_ns</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;animate&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_animate</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_animate</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_step</span> <span class="p">:</span>
+                <span class="k">def</span> <span class="nf">animate</span><span class="p">():</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_step</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_animate</span> <span class="o">=</span> <span class="n">animate</span>
+            </div>
+<div class="viewcode-block" id="RApplet.step"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.r.RApplet.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># TODO : get function from the current widget!</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_step</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_step</span><span class="p">()</span>
+        <span class="c">#print &quot;step python&quot;    </span>
+        </div>
+<div class="viewcode-block" id="RApplet.stop"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.r.RApplet.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># TODO : to implement</span>
+        <span class="c"># print &quot;stop python&quot;</span>
+        <span class="k">pass</span>
+    </div>
+<div class="viewcode-block" id="RApplet.animate"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.r.RApplet.animate">[docs]</a>    <span class="k">def</span> <span class="nf">animate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># TODO : get function from the current widget!</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_animate</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_animate</span><span class="p">()</span>
+        <span class="c"># print &quot;animate python&quot;</span>
+</div>
+<div class="viewcode-block" id="RApplet.reinit"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.r.RApplet.reinit">[docs]</a>    <span class="k">def</span> <span class="nf">reinit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># TODO : get function from the current widget!</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">()</span>
+        <span class="c">#print &quot;re-init python&quot;   </span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, INRIA VirtualPlants.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

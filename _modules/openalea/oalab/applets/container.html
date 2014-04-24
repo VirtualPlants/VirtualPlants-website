@@ -1,0 +1,445 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>openalea.oalab.applets.container &mdash; OpenAleaLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/virtualplants.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="OpenAleaLab 1.0 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for openalea.oalab.applets.container</h1><div class="highlight"><pre>
+ <span class="c"># -*- python -*-</span>
+<span class="c"># </span>
+<span class="c">#       OpenAlea.OALab: Multi-Paradigm GUI</span>
+<span class="c">#</span>
+<span class="c">#       Copyright 2013 INRIA - CIRAD - INRA</span>
+<span class="c">#</span>
+<span class="c">#       File author(s): Julien Coste &lt;julien.coste@inria.fr&gt;</span>
+<span class="c">#</span>
+<span class="c">#       File contributor(s):</span>
+<span class="c">#</span>
+<span class="c">#       Distributed under the Cecill-C License.</span>
+<span class="c">#       See accompanying file LICENSE.txt or copy at</span>
+<span class="c">#           http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.html</span>
+<span class="c">#</span>
+<span class="c">#       OpenAlea WebSite : http://openalea.gforge.inria.fr</span>
+<span class="c">#</span>
+<span class="c">###############################################################################</span>
+<span class="n">__revision__</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">openalea.vpltk.qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span> <span class="nn">openalea.vpltk.plugin</span> <span class="kn">import</span> <span class="n">discover</span><span class="p">,</span> <span class="n">Plugin</span>
+<span class="kn">from</span> <span class="nn">openalea.core</span> <span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.gui.pages</span> <span class="kn">import</span> <span class="n">WelcomePage</span><span class="p">,</span> <span class="n">CreateFilePage</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.project.pretty_preview</span> <span class="kn">import</span> <span class="n">ProjectSelectorScroll</span>
+
+<div class="viewcode-block" id="AppletContainer"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer">[docs]</a><span class="k">class</span> <span class="nc">AppletContainer</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QTabWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Contains applets.</span>
+<span class="sd">    Each tab is an applet.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">identifier</span> <span class="o">=</span> <span class="s">&quot;WidgetEditorContainer&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Editor Container&quot;</span>    
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AppletContainer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">session</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setTabsClosable</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumSize</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applets</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">paradigms</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">applets</span> <span class="o">=</span> <span class="n">discover</span><span class="p">(</span><span class="s">&#39;oalab.paradigm_applet&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">app</span> <span class="ow">in</span> <span class="n">applets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">applet</span> <span class="o">=</span> <span class="n">Plugin</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+            <span class="n">applet</span> <span class="o">=</span> <span class="n">applet</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">paradigms</span><span class="p">[</span><span class="n">applet</span><span class="o">.</span><span class="n">default_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">applet</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setAccessibleName</span><span class="p">(</span><span class="s">&quot;Container&quot;</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSave</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/save.png&quot;</span><span class="p">),</span><span class="s">&quot;Save&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionRun</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/run.png&quot;</span><span class="p">),</span><span class="s">&quot;Run&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionAnimate</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/play.png&quot;</span><span class="p">),</span><span class="s">&quot;Animate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionStep</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/step.png&quot;</span><span class="p">),</span><span class="s">&quot;Step&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionStop</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/pause.png&quot;</span><span class="p">),</span><span class="s">&quot;Stop&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionInit</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/rewind.png&quot;</span><span class="p">),</span><span class="s">&quot;Init&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionRunSelection</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/run.png&quot;</span><span class="p">),</span><span class="s">&quot;Run subpart&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionUndo</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/editundo.png&quot;</span><span class="p">),</span><span class="s">&quot;Undo&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionRedo</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/editredo.png&quot;</span><span class="p">),</span><span class="s">&quot;Redo&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSearch</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/editfind.png&quot;</span><span class="p">),</span><span class="s">&quot;Search&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionComment</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/commentOn.png&quot;</span><span class="p">),</span><span class="s">&quot;Comment&quot;</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionUnComment</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/commentOff.png&quot;</span><span class="p">),</span><span class="s">&quot;Uncomment&quot;</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionGoto</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/next-green.png&quot;</span><span class="p">),</span><span class="s">&quot;Go To&quot;</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span> 
+       
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionComment</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s">&quot;Ctrl+W&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">))</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionUnComment</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s">&quot;Ctrl+J&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">))</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionRunSelection</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s">&quot;Ctrl+R&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSearch</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s">&quot;Ctrl+F&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionGoto</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s">&quot;Ctrl+G&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSave</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s">&quot;Ctrl+S&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionRun</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s">&quot;F1&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionAnimate</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s">&quot;F2&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionStep</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s">&quot;F3&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionStop</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s">&quot;F4&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionInit</span><span class="o">.</span><span class="n">setShortcut</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s">&quot;MainWindow&quot;</span><span class="p">,</span> <span class="s">&quot;F5&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">))</span>
+
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionSave</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">)</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionRun</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionAnimate</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">animate</span><span class="p">)</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionStep</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">)</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionStop</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionInit</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">reinit</span><span class="p">)</span>
+        
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionRunSelection</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">run_selected_part</span><span class="p">)</span>
+        
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionUndo</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">undo</span><span class="p">)</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionRedo</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">redo</span><span class="p">)</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionSearch</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">)</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionGoto</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">goto</span><span class="p">)</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionComment</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="p">)</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionUnComment</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">uncomment</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionStop</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&quot;Simulation&quot;</span><span class="p">,</span><span class="s">&quot;Play&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actionRun</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s">&quot;Simulation&quot;</span><span class="p">,</span><span class="s">&quot;Play&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actionAnimate</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s">&quot;Simulation&quot;</span><span class="p">,</span><span class="s">&quot;Play&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actionStep</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s">&quot;Simulation&quot;</span><span class="p">,</span><span class="s">&quot;Play&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actionStop</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s">&quot;Simulation&quot;</span><span class="p">,</span><span class="s">&quot;Play&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actionInit</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s">&quot;Simulation&quot;</span><span class="p">,</span><span class="s">&quot;Text Edit&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actionSave</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> 
+                         <span class="p">[</span><span class="s">&quot;Simulation&quot;</span><span class="p">,</span><span class="s">&quot;Text Edit&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actionUndo</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s">&quot;Simulation&quot;</span><span class="p">,</span><span class="s">&quot;Text Edit&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actionRedo</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s">&quot;Simulation&quot;</span><span class="p">,</span><span class="s">&quot;Text Edit&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actionRunSelection</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> 
+                         <span class="p">[</span><span class="s">&quot;Simulation&quot;</span><span class="p">,</span><span class="s">&quot;Text Edit&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actionSearch</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s">&quot;Simulation&quot;</span><span class="p">,</span><span class="s">&quot;Text Edit&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actionGoto</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>          
+                         <span class="p">[</span><span class="s">&quot;Simulation&quot;</span><span class="p">,</span><span class="s">&quot;Text Edit&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actionComment</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s">&quot;Simulation&quot;</span><span class="p">,</span><span class="s">&quot;Text Edit&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">actionUnComment</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+                                    
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;tabCloseRequested(int)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">autoClose</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+<div class="viewcode-block" id="AppletContainer.setTabRed"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.setTabRed">[docs]</a>    <span class="k">def</span> <span class="nf">setTabRed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tabBar</span><span class="p">()</span><span class="o">.</span><span class="n">setTabTextColor</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">red</span><span class="p">)</span>
+            </div>
+<div class="viewcode-block" id="AppletContainer.setTabBlack"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.setTabBlack">[docs]</a>    <span class="k">def</span> <span class="nf">setTabBlack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tabBar</span><span class="p">()</span><span class="o">.</span><span class="n">setTabTextColor</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">black</span><span class="p">)</span>
+            </div>
+<div class="viewcode-block" id="AppletContainer.setAllTabBlack"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.setAllTabBlack">[docs]</a>    <span class="k">def</span> <span class="nf">setAllTabBlack</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setTabBlack</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.addDefaultTab"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.addDefaultTab">[docs]</a>    <span class="k">def</span> <span class="nf">addDefaultTab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Display a welcome tab if nothing is opened</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">welcomePage</span> <span class="o">=</span> <span class="n">ProjectSelectorScroll</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">project_manager</span><span class="o">.</span><span class="n">projects</span><span class="p">,</span> <span class="n">open_project</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">project_manager</span><span class="o">.</span><span class="n">openProject</span><span class="p">)</span>
+        <span class="c">#welcomePage = WelcomePage(session = self.session, controller=self.controller, parent=self.parent())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="n">welcomePage</span><span class="p">,</span> <span class="s">&quot;Welcome&quot;</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.addCreateFileTab"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.addCreateFileTab">[docs]</a>    <span class="k">def</span> <span class="nf">addCreateFileTab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Display a tab to select type of file that you can create</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">CreateFilePage</span><span class="p">(</span><span class="n">session</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="s">&quot;Create File&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rmTab</span><span class="p">(</span><span class="s">&quot;Welcome&quot;</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="AppletContainer.rmTab"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.rmTab">[docs]</a>    <span class="k">def</span> <span class="nf">rmTab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tabname</span><span class="o">=</span><span class="s">&quot;Welcome&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove the tab named &quot;tabname&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        :param tabname: name of the tab to remove. Default: &quot;Welcome&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabText</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="n">tabname</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">removeTab</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> 
+    </div>
+<div class="viewcode-block" id="AppletContainer.reset"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete all tabs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">closeAll</span><span class="p">()</span>        
+    </div>
+<div class="viewcode-block" id="AppletContainer.openTab"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.openTab">[docs]</a>    <span class="k">def</span> <span class="nf">openTab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">applet_type</span><span class="p">,</span> <span class="n">tab_name</span><span class="p">,</span> <span class="n">script</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Open a tab with the widget &#39;applet_type&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">newTab</span><span class="p">(</span><span class="n">applet_type</span><span class="o">=</span><span class="n">applet_type</span><span class="p">,</span> <span class="n">tab_name</span><span class="o">=</span><span class="n">tab_name</span><span class="p">,</span> <span class="n">script</span><span class="o">=</span><span class="n">script</span><span class="p">)</span>
+            </div>
+<div class="viewcode-block" id="AppletContainer.newTab"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.newTab">[docs]</a>    <span class="k">def</span> <span class="nf">newTab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">applet_type</span><span class="p">,</span> <span class="n">tab_name</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">script</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Open a tab with the widget &#39;applet_type&#39;</span>
+<span class="sd">        </span>
+<span class="sd">        # TODO : automatize with plugin system</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;New tab. Type: &quot;</span> <span class="o">+</span> <span class="n">applet_type</span> <span class="o">+</span> <span class="s">&quot;. Name: &quot;</span> <span class="o">+</span> <span class="n">tab_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rmTab</span><span class="p">(</span><span class="s">&quot;Welcome&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rmTab</span><span class="p">(</span><span class="s">&quot;Create File&quot;</span><span class="p">)</span>
+        
+        <span class="c"># TODO : permit to add more than one script...</span>
+        <span class="c"># existing_tabs = list()</span>
+        <span class="c"># for name in self.session.project.src:</span>
+        <span class="c">#    existing_tabs.append(name)</span>
+        <span class="c"># tab_name = check_if_name_is_unique(tab_name, existing_tabs)</span>
+
+        <span class="n">Applet</span> <span class="o">=</span> <span class="bp">None</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paradigms</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">applet_type</span><span class="p">):</span>
+            <span class="c"># Check in paradigm.default_name</span>
+            <span class="n">Applet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paradigms</span><span class="p">[</span><span class="n">applet_type</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># Check in paradigm.extension</span>
+            <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paradigms</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">extension</span> <span class="o">==</span> <span class="n">applet_type</span><span class="p">:</span>
+                    <span class="n">Applet</span> <span class="o">=</span> <span class="n">value</span>
+        
+        <span class="n">icon</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">Applet</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>            
+            <span class="n">appl</span> <span class="o">=</span> <span class="n">Applet</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="n">tab_name</span><span class="p">,</span> <span class="n">script</span><span class="o">=</span><span class="n">script</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">appl</span><span class="p">)</span>
+            <span class="n">icon</span> <span class="o">=</span> <span class="n">Applet</span><span class="o">.</span><span class="n">icon</span>
+            
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="p">(),</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">icon</span><span class="p">),</span> <span class="n">tab_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCurrentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">tab_name</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">connect_actions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">menu</span><span class="p">)</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;currentChanged(int)&#39;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">focusChange</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setTabBlack</span><span class="p">()</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.focusChange"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.focusChange">[docs]</a>    <span class="k">def</span> <span class="nf">focusChange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">widget</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="s">&quot;applet&quot;</span><span class="p">):</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">focus_change</span><span class="p">()</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.closeTab"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.closeTab">[docs]</a>    <span class="k">def</span> <span class="nf">closeTab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Close current tab</span>
+<span class="sd">        &quot;&quot;&quot;</span>       
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">current_is_project</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">addCreateFileTab</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">addDefaultTab</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Close tab&quot;</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.autoClose"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.autoClose">[docs]</a>    <span class="k">def</span> <span class="nf">autoClose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_tab</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">n_tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">closeTab</span><span class="p">()</span>   
+        </div>
+<div class="viewcode-block" id="AppletContainer.closeAll"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.closeAll">[docs]</a>    <span class="k">def</span> <span class="nf">closeAll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">closeTab</span><span class="p">()</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.actions"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.actions">[docs]</a>    <span class="k">def</span> <span class="nf">actions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: list of actions to set in the menu.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span>
+</div>
+<div class="viewcode-block" id="AppletContainer.mainMenu"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.mainMenu">[docs]</a>    <span class="k">def</span> <span class="nf">mainMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: Name of menu tab to automatically set current when current widget</span>
+<span class="sd">        begin current.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;Simulation&quot;</span>     
+    </div>
+<div class="viewcode-block" id="AppletContainer.save"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save current script</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="bp">None</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currentIndex</span><span class="p">())</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Save model &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="AppletContainer.save_all"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.save_all">[docs]</a>    <span class="k">def</span> <span class="nf">save_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save all opened src</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Save all models&quot;</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">wid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">wid</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">wid</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> saved.&quot;</span><span class="o">%</span><span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setTabText</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                </div>
+<div class="viewcode-block" id="AppletContainer.run_selected_part"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.run_selected_part">[docs]</a>    <span class="k">def</span> <span class="nf">run_selected_part</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">project_manager</span><span class="o">.</span><span class="n">update_from_widgets</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">run_selected_part</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Run selected part &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Can&#39;t run selected part &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.run"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">project_manager</span><span class="o">.</span><span class="n">update_from_widgets</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Run &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.animate"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.animate">[docs]</a>    <span class="k">def</span> <span class="nf">animate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">project_manager</span><span class="o">.</span><span class="n">update_from_widgets</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">animate</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Animate &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.step"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">project_manager</span><span class="o">.</span><span class="n">update_from_widgets</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Step &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.stop"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">project_manager</span><span class="o">.</span><span class="n">update_from_widgets</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Stop &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.reinit"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.reinit">[docs]</a>    <span class="k">def</span> <span class="nf">reinit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">project_manager</span><span class="o">.</span><span class="n">update_from_widgets</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">reinit</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Reinit &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="AppletContainer.undo"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.undo">[docs]</a>    <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">undo</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Undo &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Can&#39;t use method Undo in &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.redo"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.redo">[docs]</a>    <span class="k">def</span> <span class="nf">redo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">redo</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Redo &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Can&#39;t use method Redo in &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.search"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>        
+            <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">search</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Search &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Can&#39;t use method search in &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.comment"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.comment">[docs]</a>    <span class="k">def</span> <span class="nf">comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">comment</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;comment &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Can&#39;t use method comment in &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="AppletContainer.uncomment"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.uncomment">[docs]</a>    <span class="k">def</span> <span class="nf">uncomment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">uncomment</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;uncomment &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Can&#39;t use method uncomment in &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="AppletContainer.goto"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.applets.html#openalea.oalab.applets.container.AppletContainer.goto">[docs]</a>    <span class="k">def</span> <span class="nf">goto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">goto</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Goto &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Can&#39;t use method Goto in &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span><span class="o">.</span><span class="n">applet</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, INRIA VirtualPlants.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

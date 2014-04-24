@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>openalea.oalab.gui.mainwindow &mdash; OpenAleaLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/virtualplants.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="OpenAleaLab 1.0 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for openalea.oalab.gui.mainwindow</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># -*- python -*-</span>
+<span class="c">#</span>
+<span class="c">#       Main Window class</span>
+<span class="c">#       VPlantsLab GUI is created here</span>
+<span class="c">#</span>
+<span class="c">#       OpenAlea.OALab: Multi-Paradigm GUI</span>
+<span class="c">#</span>
+<span class="c">#       Copyright 2013 INRIA - CIRAD - INRA</span>
+<span class="c">#</span>
+<span class="c">#       File author(s): Julien Coste &lt;julien.coste@inria.fr&gt;</span>
+<span class="c">#</span>
+<span class="c">#       File contributor(s):</span>
+<span class="c">#</span>
+<span class="c">#       Distributed under the Cecill-C License.</span>
+<span class="c">#       See accompanying file LICENSE.txt or copy at</span>
+<span class="c">#           http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.html</span>
+<span class="c">#</span>
+<span class="c">#       OpenAlea WebSite : http://openalea.gforge.inria.fr</span>
+<span class="c">#</span>
+<span class="c">###############################################################################</span>
+<span class="n">__revision__</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">types</span>
+
+<span class="kn">from</span> <span class="nn">openalea.vpltk.qt</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span>
+<span class="kn">from</span> <span class="nn">openalea.core</span> <span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">from</span> <span class="nn">openalea.core.path</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">openalea.core.settings</span> <span class="kn">import</span> <span class="n">get_openalea_home_dir</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.config.template</span> <span class="kn">import</span> <span class="n">config_file_default</span><span class="p">,</span> <span class="n">config_file_mini</span><span class="p">,</span> <span class="n">config_file_3d</span><span class="p">,</span> <span class="n">config_file_tissue</span><span class="p">,</span> <span class="n">config_file_plant</span>
+
+<div class="viewcode-block" id="MainWindow"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow">[docs]</a><span class="k">class</span> <span class="nc">MainWindow</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main Window Class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">session</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeExtension</span><span class="p">(</span><span class="n">extension</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">extension</span><span class="p">)</span>
+
+        <span class="c"># Central Widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">applet_container</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">readSettings</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSettingsInMenu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setShowDockInMenu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSelectLabInMenu</span><span class="p">()</span>
+
+        <span class="c"># print self.controller.classical_menu.actions()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setMenuBar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">classical_menu</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MainWindow.changeExtension"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow.changeExtension">[docs]</a>    <span class="k">def</span> <span class="nf">changeExtension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change to a new extension.</span>
+
+<span class="sd">        :param extension: can be &quot;mini&quot;, &quot;3d&quot;, &quot;tissue&quot;, &quot;plant&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeDocksWidgets</span><span class="p">()</span>
+
+        <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;oalab.py&#39;</span>
+        <span class="n">conf</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="n">get_openalea_home_dir</span><span class="p">())</span> <span class="o">/</span> <span class="n">filename</span>
+        <span class="k">if</span> <span class="n">extension</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;mini&quot;</span><span class="p">,</span> <span class="s">&quot;3d&quot;</span><span class="p">,</span> <span class="s">&quot;tissue&quot;</span><span class="p">,</span> <span class="s">&quot;plant&quot;</span><span class="p">]:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;oalab_&#39;</span> <span class="o">+</span> <span class="n">extension</span> <span class="o">+</span> <span class="s">&#39;.py&#39;</span><span class="p">)</span>
+            <span class="n">conf</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="n">get_openalea_home_dir</span><span class="p">())</span> <span class="o">/</span> <span class="n">filename</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">conf</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">with</span> <span class="n">conf</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="c"># TODO : auto generate config file</span>
+                <span class="c"># f.write(self._config.generate_config_file())</span>
+                <span class="k">if</span> <span class="n">extension</span> <span class="o">==</span> <span class="s">&quot;mini&quot;</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config_file_mini</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">extension</span> <span class="o">==</span> <span class="s">&quot;3d&quot;</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config_file_3d</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">extension</span> <span class="o">==</span> <span class="s">&quot;tissue&quot;</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config_file_tissue</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">extension</span> <span class="o">==</span> <span class="s">&quot;plant&quot;</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config_file_plant</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config_file_default</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">load_config_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">get_openalea_home_dir</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWidgets</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="MainWindow.closeEvent"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writeSettings</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">closeEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+
+    <span class="c">####################################################################</span>
+    <span class="c"># ## Settings</span>
+    <span class="c">####################################################################</span></div>
+<div class="viewcode-block" id="MainWindow.writeSettings"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow.writeSettings">[docs]</a>    <span class="k">def</span> <span class="nf">writeSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register current settings (geometry and window state)</span>
+<span class="sd">        in a setting file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSettings</span><span class="p">(</span><span class="s">&quot;OpenAlea&quot;</span><span class="p">,</span> <span class="s">&quot;OpenAleaLaboratory&quot;</span><span class="p">)</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s">&quot;geometry&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saveGeometry</span><span class="p">())</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s">&quot;windowState&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saveState</span><span class="p">())</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s">&quot;session&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">project</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MainWindow.readSettings"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow.readSettings">[docs]</a>    <span class="k">def</span> <span class="nf">readSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read a setting file and restore</span>
+<span class="sd">        registered settings (geometry and window state)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSettings</span><span class="p">(</span><span class="s">&quot;OpenAlea&quot;</span><span class="p">,</span> <span class="s">&quot;OpenAleaLaboratory&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">restoreGeometry</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;geometry&quot;</span><span class="p">))</span>
+            <span class="c"># self.restoreState(settings.value(&quot;windowState&quot;))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c"># if you launch application for the first time,</span>
+            <span class="c"># it will save the default state</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s">&quot;defaultGeometry&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saveGeometry</span><span class="p">())</span>
+            <span class="c"># settings.setValue(&quot;defaultWindowState&quot;, self.saveState())</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Can t restore session&quot;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MainWindow.setSettingsInMenu"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow.setSettingsInMenu">[docs]</a>    <span class="k">def</span> <span class="nf">setSettingsInMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">class</span> <span class="nc">FakeWidget</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Use it to add features like setting widgets layout</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="nb">super</span><span class="p">(</span><span class="n">FakeWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span> <span class="o">=</span> <span class="n">parent</span>
+            <span class="k">def</span> <span class="nf">actions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">actionDefault</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/layout_blue.png&quot;</span><span class="p">),</span> <span class="s">&quot;Load Default&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="p">)</span>
+                <span class="n">actionRestorePref</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/layout_green.png&quot;</span><span class="p">),</span> <span class="s">&quot;Load Prefered&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="p">)</span>
+                <span class="n">actionSetPref</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/layout_red.png&quot;</span><span class="p">),</span> <span class="s">&quot;Save Prefered&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="p">)</span>
+
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">actionDefault</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="o">.</span><span class="n">defaultSettings</span><span class="p">)</span>
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">actionRestorePref</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="o">.</span><span class="n">preferedSettings</span><span class="p">)</span>
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">actionSetPref</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="o">.</span><span class="n">registerPreferedSettings</span><span class="p">)</span>
+
+                <span class="n">_actions</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&quot;Help&quot;</span><span class="p">,</span> <span class="s">&quot;Window Layout&quot;</span><span class="p">,</span> <span class="n">actionDefault</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                            <span class="p">[</span><span class="s">&quot;Help&quot;</span><span class="p">,</span> <span class="s">&quot;Window Layout&quot;</span><span class="p">,</span> <span class="n">actionRestorePref</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                            <span class="p">[</span><span class="s">&quot;Help&quot;</span><span class="p">,</span> <span class="s">&quot;Window Layout&quot;</span><span class="p">,</span> <span class="n">actionSetPref</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+                <span class="k">return</span> <span class="n">_actions</span>
+
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">FakeWidget</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">connect_actions</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MainWindow.setShowDockInMenu"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow.setShowDockInMenu">[docs]</a>    <span class="k">def</span> <span class="nf">setShowDockInMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Use it to add show/hide dockwidget in menu</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChildren</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDockWidget</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">windowTitle</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">&quot;menu&quot;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">btn</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="n">btn</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">isVisibleTo</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+            <span class="n">btn</span><span class="o">.</span><span class="n">toggled</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">setVisible</span><span class="p">)</span>
+            <span class="c"># child.visibilityChanged.connect(btn.setChecked)</span>
+
+            <span class="n">child</span><span class="o">.</span><span class="n">_actions</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&quot;View&quot;</span><span class="p">,</span> <span class="s">&quot;Show&quot;</span><span class="p">,</span> <span class="n">btn</span><span class="p">,</span> <span class="s">&quot;smallwidget&quot;</span><span class="p">],</span> <span class="p">]</span>
+            <span class="k">def</span> <span class="nf">actions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_actions</span>
+
+            <span class="n">child</span><span class="o">.</span><span class="n">actions</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">(</span><span class="n">actions</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">connect_actions</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MainWindow.setSelectLabInMenu"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow.setSelectLabInMenu">[docs]</a>    <span class="k">def</span> <span class="nf">setSelectLabInMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">FakeWidget</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Use it to add features like setting widgets layout</span>
+
+<span class="sd">                Actually not used</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="nb">super</span><span class="p">(</span><span class="n">FakeWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span> <span class="o">=</span> <span class="n">parent</span>
+            <span class="k">def</span> <span class="nf">actions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">minilab</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/openalealogo.png&quot;</span><span class="p">),</span> <span class="s">&quot;MiniLab&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="p">)</span>
+                <span class="n">lab3d</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/openalealogo.png&quot;</span><span class="p">),</span> <span class="s">&quot;3DLab&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="p">)</span>
+                <span class="n">plantlab</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/openalealogo.png&quot;</span><span class="p">),</span> <span class="s">&quot;PlantLab&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="p">)</span>
+                <span class="n">tissuelab</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&quot;:/images/resources/openalealogo.png&quot;</span><span class="p">),</span> <span class="s">&quot;TissueLab&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="p">)</span>
+
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">minilab</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="o">.</span><span class="n">_mini</span><span class="p">)</span>
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">lab3d</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="o">.</span><span class="n">_lab3d</span><span class="p">)</span>
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">plantlab</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="o">.</span><span class="n">_plant</span><span class="p">)</span>
+                <span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">tissuelab</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;triggered(bool)&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">mainwindow</span><span class="o">.</span><span class="n">_tissue</span><span class="p">)</span>
+
+                <span class="n">_actions</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&quot;Extension&quot;</span><span class="p">,</span> <span class="s">&quot;Select an Extension&quot;</span><span class="p">,</span> <span class="n">minilab</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                            <span class="p">[</span><span class="s">&quot;Extension&quot;</span><span class="p">,</span> <span class="s">&quot;Select an Extension&quot;</span><span class="p">,</span> <span class="n">lab3d</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                            <span class="p">[</span><span class="s">&quot;Extension&quot;</span><span class="p">,</span> <span class="s">&quot;Select an Extension&quot;</span><span class="p">,</span> <span class="n">plantlab</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                            <span class="p">[</span><span class="s">&quot;Extension&quot;</span><span class="p">,</span> <span class="s">&quot;Select an Extension&quot;</span><span class="p">,</span> <span class="n">tissuelab</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+                <span class="k">return</span> <span class="bp">None</span>
+
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">FakeWidget</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">connect_actions</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MainWindow.defaultSettings"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow.defaultSettings">[docs]</a>    <span class="k">def</span> <span class="nf">defaultSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restore default settings (geometry and window state)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSettings</span><span class="p">(</span><span class="s">&quot;OpenAlea&quot;</span><span class="p">,</span> <span class="s">&quot;OpenAleaLaboratory&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">restoreGeometry</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;defaultGeometry&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;defaultWindowState&quot;</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="MainWindow.preferedSettings"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow.preferedSettings">[docs]</a>    <span class="k">def</span> <span class="nf">preferedSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get prefered settings and restore them</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">settings</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSettings</span><span class="p">(</span><span class="s">&quot;OpenAlea&quot;</span><span class="p">,</span> <span class="s">&quot;OpenAleaLaboratory&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">restoreGeometry</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;preferedGeometry&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">restoreState</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;preferedWindowState&quot;</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Can t restore prefered session&quot;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MainWindow.registerPreferedSettings"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow.registerPreferedSettings">[docs]</a>    <span class="k">def</span> <span class="nf">registerPreferedSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register current settings as preferd settings</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSettings</span><span class="p">(</span><span class="s">&quot;OpenAlea&quot;</span><span class="p">,</span> <span class="s">&quot;OpenAleaLaboratory&quot;</span><span class="p">)</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s">&quot;preferedGeometry&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saveGeometry</span><span class="p">())</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s">&quot;preferedWindowState&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saveState</span><span class="p">())</span>
+
+    <span class="c">####################################################################</span>
+    <span class="c"># ## Widgets</span>
+    <span class="c">####################################################################</span>
+</div>
+    <span class="k">def</span> <span class="nf">_dockWidget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">allowed_area</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="bp">None</span> <span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">identifier</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">allowed_area</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">allowed_area</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftDockWidgetArea</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RightDockWidgetArea</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TopDockWidgetArea</span> <span class="o">|</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BottomDockWidgetArea</span>
+        <span class="k">if</span> <span class="n">position</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">position</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftDockWidgetArea</span>
+
+        <span class="k">if</span> <span class="n">alias</span><span class="p">:</span>
+            <span class="n">dock_widget</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDockWidget</span><span class="p">(</span><span class="n">alias</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dock_widget</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDockWidget</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">dock_widget</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">Panel&quot;</span> <span class="o">%</span> <span class="n">identifier</span><span class="p">)</span>
+        <span class="n">dock_widget</span><span class="o">.</span><span class="n">setAllowedAreas</span><span class="p">(</span><span class="n">allowed_area</span><span class="p">)</span>
+        <span class="n">dock_widget</span><span class="o">.</span><span class="n">setWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addDockWidget</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">dock_widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="p">[</span><span class="n">identifier</span><span class="p">]</span> <span class="o">=</span> <span class="n">dock_widget</span>
+        <span class="n">display</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;MainWindowConfig&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">identifier</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="n">dock_widget</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">display</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">dock_widget</span>
+
+<div class="viewcode-block" id="MainWindow.setWidgets"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow.setWidgets">[docs]</a>    <span class="k">def</span> <span class="nf">setWidgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+        <span class="c"># Menu</span>
+        <span class="n">dock_menu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dockWidget</span><span class="p">(</span><span class="s">&quot;Menu&quot;</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">menu</span><span class="p">,</span>
+                                     <span class="n">allowed_area</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TopDockWidgetArea</span><span class="p">,</span>
+                                     <span class="n">position</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">TopDockWidgetArea</span><span class="p">)</span>
+        <span class="n">dock_menu</span><span class="o">.</span><span class="n">setFeatures</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDockWidget</span><span class="o">.</span><span class="n">NoDockWidgetFeatures</span><span class="p">)</span>
+
+        <span class="c"># Docks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dockWidget</span><span class="p">(</span><span class="s">&quot;Viewer3D&quot;</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&quot;Viewer3D&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;3D Viewer&quot;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RightDockWidgetArea</span><span class="p">)</span>
+        <span class="c"># self._dockWidget(&quot;Store&quot;, controller.applets[&quot;Store&quot;], name=&quot;OpenAlea Store&quot;, position=QtCore.Qt.RightDockWidgetArea)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dockWidget</span><span class="p">(</span><span class="s">&quot;HelpWidget&quot;</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&quot;HelpWidget&quot;</span><span class="p">],</span> <span class="n">position</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RightDockWidgetArea</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="s">&quot;Help&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dockWidget</span><span class="p">(</span><span class="s">&quot;Project&quot;</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&quot;Project&quot;</span><span class="p">],</span> <span class="n">position</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">RightDockWidgetArea</span><span class="p">)</span>
+        <span class="c"># self._dockWidget(&quot;ProjectManager&quot;, controller.applets[&quot;ProjectManager&quot;],position=QtCore.Qt.RightDockWidgetArea) # Project Manager</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dockWidget</span><span class="p">(</span><span class="s">&quot;Shell&quot;</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">shell</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;IPython Shell&quot;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BottomDockWidgetArea</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dockWidget</span><span class="p">(</span><span class="s">&quot;Logger&quot;</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&quot;Logger&quot;</span><span class="p">],</span> <span class="n">position</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BottomDockWidgetArea</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dockWidget</span><span class="p">(</span><span class="s">&quot;Packages&quot;</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&quot;Packages&quot;</span><span class="p">],</span> <span class="n">position</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BottomDockWidgetArea</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dockWidget</span><span class="p">(</span><span class="s">&quot;PackageCategories&quot;</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&quot;PackageCategories&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Package Categories&quot;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BottomDockWidgetArea</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dockWidget</span><span class="p">(</span><span class="s">&quot;PackageSearch&quot;</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&quot;PackageSearch&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Package Search&quot;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BottomDockWidgetArea</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;ControlPanel&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dockWidget</span><span class="p">(</span><span class="s">&quot;ControlPanel&quot;</span><span class="p">,</span> <span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&quot;ControlPanel&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Control Panel&quot;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BottomDockWidgetArea</span><span class="p">)</span>
+            <span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;ControlPanel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">geometry_editor</span><span class="o">.</span><span class="n">setStatusBar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">())</span>
+
+        <span class="c"># self._dockwidgets[&#39;Store&#39;].hide()</span>
+
+        <span class="c"># Status bar</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span>
+        <span class="n">status</span><span class="o">.</span><span class="n">setSizeGripEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">controller</span><span class="o">.</span><span class="n">statusBar</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s">&quot;OALab is ready!&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+
+        <span class="c"># Tabify docks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabifyDockWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="p">[</span><span class="s">&#39;Logger&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="p">[</span><span class="s">&#39;Shell&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabifyDockWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="p">[</span><span class="s">&#39;PackageSearch&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="p">[</span><span class="s">&#39;PackageCategories&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabifyDockWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="p">[</span><span class="s">&#39;PackageCategories&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="p">[</span><span class="s">&#39;Packages&#39;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;Packages&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;ControlPanel&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tabifyDockWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="p">[</span><span class="s">&#39;Packages&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="p">[</span><span class="s">&#39;ControlPanel&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabifyDockWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="p">[</span><span class="s">&#39;Project&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="p">[</span><span class="s">&#39;HelpWidget&#39;</span><span class="p">])</span>
+        <span class="c"># self._dockwidgets[&#39;Store&#39;].setTitleBarWidget(QtGui.QWidget())</span>
+</div>
+<div class="viewcode-block" id="MainWindow.removeDocksWidgets"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow.removeDocksWidgets">[docs]</a>    <span class="k">def</span> <span class="nf">removeDocksWidgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChildren</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDockWidget</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">removeDockWidget</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MainWindow.changeMenuTab"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.mainwindow.MainWindow.changeMenuTab">[docs]</a>    <span class="k">def</span> <span class="nf">changeMenuTab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set tab of &#39;new&#39; current in the menu.</span>
+<span class="sd">        This class is designed to be connected to focusChanged signal.</span>
+
+<span class="sd">        :param old: old widget. Not used.</span>
+<span class="sd">        :param new: current widget to check if we have to change menu</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">new</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">new</span><span class="p">,</span> <span class="s">&#39;mainMenu&#39;</span><span class="p">)</span> <span class="p">:</span>
+            <span class="c"># new=None means application has lost focus, so do not change PanedMenu.</span>
+            <span class="c"># (for example, click outside application)</span>
+
+            <span class="c"># Get Tab Name</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">mainMenu</span><span class="p">()</span>
+            <span class="c"># Get Menu</span>
+            <span class="n">menu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dockwidgets</span><span class="p">[</span><span class="s">&#39;Menu&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
+            <span class="n">menu</span><span class="o">.</span><span class="n">showPane</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+</div>
+    <span class="k">def</span> <span class="nf">_mini</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeExtension</span><span class="p">(</span><span class="s">&quot;mini&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_lab3d</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeExtension</span><span class="p">(</span><span class="s">&quot;3d&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_plant</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeExtension</span><span class="p">(</span><span class="s">&quot;plant&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_tissue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">changeExtension</span><span class="p">(</span><span class="s">&quot;tissue&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, INRIA VirtualPlants.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Builtin Graphical Components &mdash; OpenAleaLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/virtualplants.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="OpenAleaLab 1.0 documentation" href="../../../index.html" />
+    <link rel="prev" title="Extending OpenAleaLab" href="extensions.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="extensions.html" title="Extending OpenAleaLab"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="builtin-graphical-components">
+<h1>Builtin Graphical Components<a class="headerlink" href="#builtin-graphical-components" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="application">
+<h2>Application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h2>
+<p>OpenAleaLab proposes classes to create generic &#8220;labs&#8221;.
+A lab is a graphical interfaces providing several features :</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>python shell</strong>: runs scripts</li>
+<li><strong>editors</strong> : view and edit scripts, workflow, ...</li>
+<li><strong>managers</strong>: manage packages, plugins and projects</li>
+<li><strong>viewer</strong>: displays a scene in 2d or 3d</li>
+<li><strong>scene</strong>: a generic representation of all data used in simulation</li>
+<li><strong>reporting</strong>: show logs, history, ...</li>
+</ul>
+</div></blockquote>
+<p>Library also provides generic object to ease GUI creation like ribbon bars,
+mainwindow classes, but OpenAleaLab is not a generic application framework like Qt.</p>
+</div>
+<div class="section" id="extension">
+<h2>Extension<a class="headerlink" href="#extension" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="generic-graphical-components">
+<h2>Generic graphical components<a class="headerlink" href="#generic-graphical-components" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="paned-menus">
+<h3>Paned menus<a class="headerlink" href="#paned-menus" title="Permalink to this headline">¶</a></h3>
+<p>Paned menus, also called &#8220;ribbon bars&#8221; are alternatives to classical Tool bars.
+It allows to emphasize some action with larger buttons.
+To create a Paned menu, you just need to create a
+<a class="reference internal" href="apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.menu.PanedMenu" title="openalea.oalab.gui.menu.PanedMenu"><tt class="xref py py-class docutils literal"><span class="pre">PanedMenu</span></tt></a> and add <tt class="xref py py-class docutils literal"><span class="pre">QAction</span></tt> with
+<a class="reference internal" href="apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.menu.PanedMenu.addBtnByAction" title="openalea.oalab.gui.menu.PanedMenu.addBtnByAction"><tt class="xref py py-meth docutils literal"><span class="pre">addBtnByAction()</span></tt></a> method :</p>
+<p>PanedMenu components :</p>
+<a class="reference internal image-reference" href="../../../_images/api_ribbon_bar.png"><img alt="../../../_images/api_ribbon_bar.png" src="../../../_images/api_ribbon_bar.png" style="width: 600px;" /></a>
+</div>
+</div>
+<div class="section" id="main-classes-and-methods">
+<h2>Main classes and methods<a class="headerlink" href="#main-classes-and-methods" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="openalea.oalab.gui.menu.PanedMenu">
+<em class="property">class </em><tt class="descclassname">openalea.oalab.gui.menu.</tt><tt class="descname">PanedMenu</tt><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/openalea/oalab/gui/menu.html#PanedMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openalea.oalab.gui.menu.PanedMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>A widget that tries to mimic menu of Microsoft Office 2010.
+Cf. Ribbon Bar.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">openalea.oalab.gui.menu</span> <span class="kn">import</span> <span class="n">PanedMenu</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">menu</span> <span class="o">=</span> <span class="n">PanedMenu</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="openalea.oalab.gui.menu.PanedMenu.addBtnByAction">
+<tt class="descname">addBtnByAction</tt><span class="sig-paren">(</span><em>pane_name</em>, <em>group_name</em>, <em>action</em>, <em>btn_type=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/openalea/oalab/gui/menu.html#PanedMenu.addBtnByAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#openalea.oalab.gui.menu.PanedMenu.addBtnByAction" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pane_name</strong> &#8211; name of pane. type:String.</li>
+<li><strong>group_name</strong> &#8211; name of group inside the pane. type:String.</li>
+<li><strong>action</strong> &#8211; to add (with a name and an icon)</li>
+<li><strong>btn_type</strong> &#8211; type of button to add. 0 = Big Button. 1 = Small Button, smallwidget = Small Widget, bigwidget = Big Widget. Default=0.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">created button. type:QToolButton</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Builtin Graphical Components</a><ul>
+<li><a class="reference internal" href="#application">Application</a></li>
+<li><a class="reference internal" href="#extension">Extension</a></li>
+<li><a class="reference internal" href="#generic-graphical-components">Generic graphical components</a><ul>
+<li><a class="reference internal" href="#paned-menus">Paned menus</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#main-classes-and-methods">Main classes and methods</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="extensions.html"
+                        title="previous chapter">Extending OpenAleaLab</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/latest/dev/archi/api_gui_application.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="extensions.html" title="Extending OpenAleaLab"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, INRIA VirtualPlants.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

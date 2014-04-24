@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>openalea.oalab.gui.allwidgets &mdash; OpenAleaLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/virtualplants.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="OpenAleaLab 1.0 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for openalea.oalab.gui.allwidgets</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">openalea.oalab.gui.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.control.controlpanel</span> <span class="kn">import</span> <span class="n">ControlPanel</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.gui.help</span> <span class="kn">import</span> <span class="n">HelpWidget</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.gui.menu</span> <span class="kn">import</span> <span class="n">PanedMenu</span>
+<span class="kn">from</span> <span class="nn">openalea.vpltk.shell.shell</span> <span class="kn">import</span> <span class="n">get_shell_class</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.applets.container</span> <span class="kn">import</span> <span class="n">AppletContainer</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.project.manager</span> <span class="kn">import</span> <span class="n">ProjectManagerWidget</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.project.treeview</span> <span class="kn">import</span> <span class="n">ProjectLayoutWidget</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.package.widgets</span> <span class="kn">import</span> <span class="n">PackageViewWidget</span><span class="p">,</span> <span class="n">PackageCategorieViewWidget</span><span class="p">,</span> <span class="n">PackageSearchWidget</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.scene.view3d</span> <span class="kn">import</span> <span class="n">Viewer</span>
+<span class="kn">from</span> <span class="nn">openalea.vpltk.qt</span> <span class="kn">import</span> <span class="n">QtGui</span>
+
+<div class="viewcode-block" id="AllWidgets"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.allwidgets.AllWidgets">[docs]</a><span class="k">class</span> <span class="nc">AllWidgets</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    TODO:  This class must be replaced by independent widgets !</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">AllWidgets</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">applets</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">session</span>
+
+        <span class="c"># Menu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span> <span class="o">=</span> <span class="n">PanedMenu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classical_menu</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QMenuBar</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;HelpWidget&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">HelpWidget</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># Docks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;ControlPanel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ControlPanel</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;Viewer3D&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Viewer</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">shell</span> <span class="o">=</span> <span class="n">get_shell_class</span><span class="p">()(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">interpreter</span><span class="p">)</span>
+
+        <span class="c"># Applet Container : can contain text editor or/and workflow editor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applet_container</span> <span class="o">=</span> <span class="n">AppletContainer</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">interpreter</span><span class="o">.</span><span class="n">locals</span><span class="p">[</span><span class="s">&#39;applets&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">applet_container</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;Project&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ProjectLayoutWidget</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_manager</span> <span class="o">=</span> <span class="n">ProjectManagerWidget</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;HelpWidget&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;Packages&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PackageViewWidget</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;PackageCategories&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PackageCategorieViewWidget</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;PackageSearch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PackageSearchWidget</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;Logger&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">project_manager</span><span class="o">.</span><span class="n">discover</span><span class="p">()</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        proj_model = PrjctManagerModel(self.session.project_manager)</span>
+<span class="sd">        treeView = QtGui.QTreeView()</span>
+<span class="sd">        treeView.setModel(proj_model)</span>
+<span class="sd">        treeView.setHeaderHidden(True)</span>
+<span class="sd">        self.applets[&#39;ProjectManager&#39;] = treeView&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">interpreter</span><span class="o">.</span><span class="n">locals</span><span class="p">[</span><span class="s">&#39;shell&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">interpreter</span><span class="o">.</span><span class="n">locals</span><span class="p">[</span><span class="s">&#39;controller&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_locals</span><span class="p">()</span>
+
+        <span class="c"># self.applets[&#39;Store&#39;] = Store(session=self.session, controller=self, parent=self)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect_all_actions</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_update_locals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">interpreter</span><span class="o">.</span><span class="n">locals</span><span class="p">[</span><span class="s">&#39;project&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">project</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">interpreter</span><span class="o">.</span><span class="n">locals</span><span class="p">[</span><span class="s">&#39;scene&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">scene</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">interpreter</span><span class="o">.</span><span class="n">locals</span><span class="p">[</span><span class="s">&#39;control&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">control</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+<div class="viewcode-block" id="AllWidgets.connect_all_actions"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.allwidgets.AllWidgets.connect_all_actions">[docs]</a>    <span class="k">def</span> <span class="nf">connect_all_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Connect actions of different widget to the menu</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect_actions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_manager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect_actions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">applet_container</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">applet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">applets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connect_actions</span><span class="p">(</span><span class="n">applet</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="AllWidgets.connect_actions"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.gui.html#openalea.oalab.gui.allwidgets.AllWidgets.connect_actions">[docs]</a>    <span class="k">def</span> <span class="nf">connect_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">menu</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Connect actions from &#39;widget&#39; to &#39;menu&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">menu</span><span class="p">:</span>
+            <span class="n">menu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">menu</span>
+        <span class="n">actions</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">actions</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">actions</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">actions</span><span class="p">:</span>
+                <span class="n">menu</span><span class="o">.</span><span class="n">addBtnByAction</span><span class="p">(</span><span class="n">pane_name</span><span class="o">=</span><span class="n">action</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">group_name</span><span class="o">=</span><span class="n">action</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">btn_type</span><span class="o">=</span><span class="n">action</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+
+                <span class="c">#### Add a classical menu too</span>
+                <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                if isinstance(action[2], QtGui.QAction):</span>
+<span class="sd">                    menus = [men.text() for men in self.classical_menu.actions()]</span>
+<span class="sd">                    if not action[0] in menus:</span>
+<span class="sd">                        print [men.text() for men in self.classical_menu.actions()]</span>
+
+<span class="sd">                        submenu = self.classical_menu.addMenu(action[0])</span>
+<span class="sd">                        submenu.addAction(action[2])</span>
+<span class="sd">                    else:</span>
+<span class="sd">                        #get menu</span>
+<span class="sd">                        #add action in menu&quot;&quot;&quot;</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, INRIA VirtualPlants.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>

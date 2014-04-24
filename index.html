@@ -26,8 +26,8 @@
     <link rel="top" title="OpenAleaLab 1.0 documentation" href="#" />
     <link rel="next" title="Installation" href="install/index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -46,7 +46,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="virtualplants-softwares">
 <h1>VirtualPlants&#8217; Softwares<a class="headerlink" href="#virtualplants-softwares" title="Permalink to this headline">¶</a></h1>
@@ -64,7 +64,6 @@ We develop computational models of plant development to understand the physical 
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contribute/index.html">Get involved</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="contribute/index.html#how-to-contribute">How to contribute</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contribute/index.html#developer-s-documentation">Developer&#8217;s documentation</a></li>
 </ul>
 </li>
 </ul>
@@ -93,6 +92,17 @@ OpenAleaLab is based on <a class="reference external" href="http://openalea.gfor
 </li>
 </ul>
 </div>
+<div class="section" id="developer-documentation">
+<h4>Developer documentation<a class="headerlink" href="#developer-documentation" title="Permalink to this headline">¶</a></h4>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="latest/dev/index.html">Development documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="latest/dev/archi/api_project.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="latest/dev/archi/extensions.html">Extending OpenAleaLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="latest/dev/archi/api_gui_application.html">Builtin Graphical Components</a></li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -101,13 +111,16 @@ OpenAleaLab is based on <a class="reference external" href="http://openalea.gfor
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">VirtualPlants&#8217; Softwares</a><ul>
 <li><a class="reference internal" href="#softwares">Softwares</a><ul>
-<li><a class="reference internal" href="#openalealab">OpenAleaLab</a></li>
+<li><a class="reference internal" href="#openalealab">OpenAleaLab</a><ul>
+<li><a class="reference internal" href="#developer-documentation">Developer documentation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -117,12 +130,14 @@ OpenAleaLab is based on <a class="reference external" href="http://openalea.gfor
   <h4>Next topic</h4>
   <p class="topless"><a href="install/index.html"
                         title="next chapter">Installation</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/index.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -139,7 +154,7 @@ OpenAleaLab is based on <a class="reference external" href="http://openalea.gfor
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -154,9 +169,9 @@ OpenAleaLab is based on <a class="reference external" href="http://openalea.gfor
         <li><a href="#">OpenAleaLab 1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, INRIA VirtualPlants.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
     </div>
   </body>
 </html>

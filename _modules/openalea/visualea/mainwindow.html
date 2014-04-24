@@ -26,8 +26,8 @@
     <link rel="top" title="OpenAleaLab 1.0 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,7 +44,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for openalea.visualea.mainwindow</h1><div class="highlight"><pre>
 <span class="c"># -*- python -*-</span>
@@ -100,7 +100,7 @@
 
 <span class="kn">import</span> <span class="nn">traceback</span>
 
-<div class="viewcode-block" id="MainWindow"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow">[docs]</a><span class="k">class</span> <span class="nc">MainWindow</span><span class="p">(</span><span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">,</span>
+<div class="viewcode-block" id="MainWindow"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow">[docs]</a><span class="k">class</span> <span class="nc">MainWindow</span><span class="p">(</span><span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">,</span>
                  <span class="n">ui_mainwindow</span><span class="o">.</span><span class="n">Ui_MainWindow</span><span class="p">,</span>
                  <span class="n">SignalSlotListener</span><span class="p">)</span> <span class="p">:</span>
 
@@ -249,7 +249,7 @@
         <span class="c">#load personnal GUI settings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">read_settings</span><span class="p">()</span>
 
-<div class="viewcode-block" id="MainWindow.on_session_started"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.on_session_started">[docs]</a>    <span class="k">def</span> <span class="nf">on_session_started</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.on_session_started"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.on_session_started">[docs]</a>    <span class="k">def</span> <span class="nf">on_session_started</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initialise</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">session</span>
 
@@ -289,13 +289,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">simulate_workspace_addition</span><span class="p">()</span>
 
 </div>
-<div class="viewcode-block" id="MainWindow.debug"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.debug">[docs]</a>    <span class="k">def</span> <span class="nf">debug</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+<div class="viewcode-block" id="MainWindow.debug"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.debug">[docs]</a>    <span class="k">def</span> <span class="nf">debug</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
         <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">packageTreeView</span>
         <span class="k">print</span> <span class="s">&quot;items&quot;</span><span class="p">,</span><span class="n">v</span><span class="o">.</span><span class="n">expanded_items</span>
         <span class="k">print</span> <span class="s">&quot;model&quot;</span><span class="p">,</span><span class="n">v</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
         <span class="k">print</span> <span class="s">&quot;map&quot;</span><span class="p">,</span><span class="n">v</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">index_map</span>
 </div>
-<div class="viewcode-block" id="MainWindow.write_settings"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.write_settings">[docs]</a>    <span class="k">def</span> <span class="nf">write_settings</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+<div class="viewcode-block" id="MainWindow.write_settings"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.write_settings">[docs]</a>    <span class="k">def</span> <span class="nf">write_settings</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Save application settings.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="p">()</span>
@@ -318,7 +318,7 @@
 
         <span class="n">settings</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.read_settings"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.read_settings">[docs]</a>    <span class="k">def</span> <span class="nf">read_settings</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+<div class="viewcode-block" id="MainWindow.read_settings"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.read_settings">[docs]</a>    <span class="k">def</span> <span class="nf">read_settings</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Read application settings.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="p">()</span>
@@ -366,7 +366,7 @@
         <span class="k">except</span> <span class="n">NoOptionError</span> <span class="p">:</span>
             <span class="k">pass</span>
 </div>
-<div class="viewcode-block" id="MainWindow.redo_last_open_menu"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.redo_last_open_menu">[docs]</a>    <span class="k">def</span> <span class="nf">redo_last_open_menu</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+<div class="viewcode-block" id="MainWindow.redo_last_open_menu"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.redo_last_open_menu">[docs]</a>    <span class="k">def</span> <span class="nf">redo_last_open_menu</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Create entries for last opened nodes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">menuLast_open</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -380,7 +380,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">menuLast_open</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_opened</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindow.reopen_last"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.reopen_last">[docs]</a>    <span class="k">def</span> <span class="nf">reopen_last</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="p">:</span>
+<div class="viewcode-block" id="MainWindow.reopen_last"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.reopen_last">[docs]</a>    <span class="k">def</span> <span class="nf">reopen_last</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span> <span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Reopen a last open node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">gr</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
@@ -390,7 +390,7 @@
         <span class="n">factory</span> <span class="o">=</span> <span class="n">manager</span><span class="p">[</span><span class="n">pkgid</span><span class="p">][</span><span class="n">name</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">open_compositenode</span><span class="p">(</span><span class="n">factory</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindow.add_last_open"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.add_last_open">[docs]</a>    <span class="k">def</span> <span class="nf">add_last_open</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkgid</span><span class="p">,</span> <span class="n">factory_name</span><span class="p">)</span> <span class="p">:</span>
+<div class="viewcode-block" id="MainWindow.add_last_open"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.add_last_open">[docs]</a>    <span class="k">def</span> <span class="nf">add_last_open</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkgid</span><span class="p">,</span> <span class="n">factory_name</span><span class="p">)</span> <span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Register a new lest opened node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">pkgid</span><span class="p">,</span><span class="n">factory_name</span><span class="p">])</span>
@@ -436,7 +436,7 @@
     <span class="k">def</span> <span class="nf">__wsMenuHide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
-<div class="viewcode-block" id="MainWindow.open_compositenode"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.open_compositenode">[docs]</a>    <span class="k">def</span> <span class="nf">open_compositenode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factory</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.open_compositenode"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.open_compositenode">[docs]</a>    <span class="k">def</span> <span class="nf">open_compositenode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factory</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; open a  composite node editor &quot;&quot;&quot;</span>
         <span class="n">node</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
 
@@ -446,7 +446,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">add_last_open</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">__pkg_id__</span><span class="p">,</span><span class="n">factory</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="MainWindow.about"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.about">[docs]</a>    <span class="k">def</span> <span class="nf">about</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.about"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.about">[docs]</a>    <span class="k">def</span> <span class="nf">about</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Display About Dialog &quot;&quot;&quot;</span>
 
         <span class="n">mess</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">about</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;About Visualea&quot;</span><span class="p">,</span>
@@ -457,23 +457,23 @@
                                        <span class="s">&quot;Visit &quot;</span> <span class="o">+</span> <span class="n">metainfo</span><span class="o">.</span><span class="n">url</span> <span class="o">+</span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">&quot;</span>
                                        <span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindow.help"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.help">[docs]</a>    <span class="k">def</span> <span class="nf">help</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.help"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.help">[docs]</a>    <span class="k">def</span> <span class="nf">help</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Display help &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">web</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.web"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.web">[docs]</a>    <span class="k">def</span> <span class="nf">web</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.web"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.web">[docs]</a>    <span class="k">def</span> <span class="nf">web</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Open OpenAlea website &quot;&quot;&quot;</span>
         <span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDesktopServices</span><span class="o">.</span><span class="n">openUrl</span><span class="p">(</span><span class="n">qt</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="n">metainfo</span><span class="o">.</span><span class="n">url</span><span class="p">))</span>
 
 </div>
-<div class="viewcode-block" id="MainWindow.quit"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.quit">[docs]</a>    <span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.quit"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.quit">[docs]</a>    <span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Quit Application &quot;&quot;&quot;</span>
         <span class="k">if</span><span class="p">(</span> <span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;Quit?&quot;</span><span class="p">,</span> <span class="s">&quot;Are you sure you want to quit?&quot;</span><span class="p">,</span>
                                        <span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="o">|</span><span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">)</span> <span class="o">==</span>
                         <span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">):</span>
             <span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindow.notify"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.notify">[docs]</a>    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.notify"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.notify">[docs]</a>    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Notification from observed &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">event</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">GraphOperator</span><span class="p">)</span> <span class="p">:</span>
             <span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -499,7 +499,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">update_tabwidget</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.closeEvent"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.closeEvent"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Close All subwindows &quot;&quot;&quot;</span>
 
         <span class="c">#Save personnal settings</span>
@@ -513,7 +513,7 @@
         <span class="n">event</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
 
 </div>
-<div class="viewcode-block" id="MainWindow.reinit_treeview"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.reinit_treeview">[docs]</a>    <span class="k">def</span> <span class="nf">reinit_treeview</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.reinit_treeview"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.reinit_treeview">[docs]</a>    <span class="k">def</span> <span class="nf">reinit_treeview</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Reinitialise package and category views &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cat_model</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pkg_model</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
@@ -521,7 +521,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">search_model</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 
 </div>
-<div class="viewcode-block" id="MainWindow.close_tab_workspace"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.close_tab_workspace">[docs]</a>    <span class="k">def</span> <span class="nf">close_tab_workspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cindex</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.close_tab_workspace"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.close_tab_workspace">[docs]</a>    <span class="k">def</span> <span class="nf">close_tab_workspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cindex</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Close workspace indexed by cindex cindex is Node&quot;&quot;&quot;</span>
         <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabWorkspace</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">cindex</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tabWorkspace</span><span class="o">.</span><span class="n">removeTab</span><span class="p">(</span><span class="n">cindex</span><span class="p">)</span>
@@ -532,11 +532,11 @@
         <span class="n">w</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">del</span> <span class="n">w</span>
 </div>
-<div class="viewcode-block" id="MainWindow.current_view"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.current_view">[docs]</a>    <span class="k">def</span> <span class="nf">current_view</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+<div class="viewcode-block" id="MainWindow.current_view"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.current_view">[docs]</a>    <span class="k">def</span> <span class="nf">current_view</span> <span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
         <span class="sd">&quot;&quot;&quot; Return the active widget &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabWorkspace</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.update_tabwidget"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.update_tabwidget">[docs]</a>    <span class="k">def</span> <span class="nf">update_tabwidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.update_tabwidget"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.update_tabwidget">[docs]</a>    <span class="k">def</span> <span class="nf">update_tabwidget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; open tab widget &quot;&quot;&quot;</span>
         <span class="c"># open tab widgets</span>
         <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">workspaces</span><span class="p">):</span>
@@ -553,7 +553,7 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">removelist</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">close_tab_workspace</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindow.open_widget_tab"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.open_widget_tab">[docs]</a>    <span class="k">def</span> <span class="nf">open_widget_tab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">factory</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.open_widget_tab"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.open_widget_tab">[docs]</a>    <span class="k">def</span> <span class="nf">open_widget_tab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">factory</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Open a widget in a tab giving an instance and its widget</span>
 <span class="sd">        caption is append to the tab title</span>
@@ -591,14 +591,14 @@
         <span class="k">return</span> <span class="n">index</span>
 
 </div>
-<div class="viewcode-block" id="MainWindow.add_pkgdir"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.add_pkgdir">[docs]</a>    <span class="k">def</span> <span class="nf">add_pkgdir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.add_pkgdir"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.add_pkgdir">[docs]</a>    <span class="k">def</span> <span class="nf">add_pkgdir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">dirname</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getExistingDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;Select Package/Directory&quot;</span><span class="p">)</span>
         <span class="k">if</span><span class="p">(</span><span class="n">dirname</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pkgmanager</span><span class="o">.</span><span class="n">load_directory</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dirname</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
 
 </div>
-<div class="viewcode-block" id="MainWindow.reload_all"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.reload_all">[docs]</a>    <span class="k">def</span> <span class="nf">reload_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.reload_all"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.reload_all">[docs]</a>    <span class="k">def</span> <span class="nf">reload_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="c"># Reload package manager</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pkgmanager</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
@@ -609,12 +609,12 @@
         <span class="c">#for index in range(len(self.index_nodewidget)):</span>
         <span class="c">#    self.reload_from_factory(index)</span>
 </div>
-<div class="viewcode-block" id="MainWindow.ws_changed"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.ws_changed">[docs]</a>    <span class="k">def</span> <span class="nf">ws_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.ws_changed"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.ws_changed">[docs]</a>    <span class="k">def</span> <span class="nf">ws_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Current workspace has changed &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">cworkspace</span> <span class="o">=</span> <span class="n">index</span>
 
 </div>
-<div class="viewcode-block" id="MainWindow.contextMenuEvent"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.contextMenuEvent">[docs]</a>    <span class="k">def</span> <span class="nf">contextMenuEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.contextMenuEvent"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.contextMenuEvent">[docs]</a>    <span class="k">def</span> <span class="nf">contextMenuEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Context menu event : Display the menu&quot;&quot;&quot;</span>
 
         <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabWorkspace</span><span class="o">.</span><span class="n">mapFromGlobal</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">())</span>
@@ -652,11 +652,11 @@
         <span class="n">menu</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">globalPos</span><span class="p">())</span>
         <span class="n">menu</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.new_workspace"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.new_workspace">[docs]</a>    <span class="k">def</span> <span class="nf">new_workspace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.new_workspace"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.new_workspace">[docs]</a>    <span class="k">def</span> <span class="nf">new_workspace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Create an empty workspace &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add_workspace</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.new_graph"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.new_graph">[docs]</a>    <span class="k">def</span> <span class="nf">new_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.new_graph"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.new_graph">[docs]</a>    <span class="k">def</span> <span class="nf">new_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Create a new graph &quot;&quot;&quot;</span>
 
         <span class="n">dialog</span> <span class="o">=</span> <span class="n">NewGraph</span><span class="p">(</span><span class="s">&quot;New Composite Node&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pkgmanager</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
@@ -667,7 +667,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">open_compositenode</span><span class="p">(</span><span class="n">newfactory</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindow.new_python_node"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.new_python_node">[docs]</a>    <span class="k">def</span> <span class="nf">new_python_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.new_python_node"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.new_python_node">[docs]</a>    <span class="k">def</span> <span class="nf">new_python_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Create a new node &quot;&quot;&quot;</span>
 
         <span class="n">dialog</span> <span class="o">=</span> <span class="n">NewGraph</span><span class="p">(</span><span class="s">&quot;New Python Node&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pkgmanager</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
@@ -677,7 +677,7 @@
             <span class="n">dialog</span><span class="o">.</span><span class="n">create_nodefactory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pkgmanager</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.new_data"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.new_data">[docs]</a>    <span class="k">def</span> <span class="nf">new_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.new_data"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.new_data">[docs]</a>    <span class="k">def</span> <span class="nf">new_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Import file &quot;&quot;&quot;</span>
 
         <span class="n">dialog</span> <span class="o">=</span> <span class="n">NewData</span><span class="p">(</span><span class="s">&quot;Import data file&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pkgmanager</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
@@ -687,7 +687,7 @@
             <span class="n">dialog</span><span class="o">.</span><span class="n">create_datafactory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pkgmanager</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.new_package"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.new_package">[docs]</a>    <span class="k">def</span> <span class="nf">new_package</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.new_package"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.new_package">[docs]</a>    <span class="k">def</span> <span class="nf">new_package</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Create a new user package &quot;&quot;&quot;</span>
 
         <span class="n">dialog</span> <span class="o">=</span> <span class="n">NewPackage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pkgmanager</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="p">)</span>
@@ -699,7 +699,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">pkgmanager</span><span class="o">.</span><span class="n">create_user_package</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">metainfo</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reinit_treeview</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.exec_python_script"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.exec_python_script">[docs]</a>    <span class="k">def</span> <span class="nf">exec_python_script</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.exec_python_script"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.exec_python_script">[docs]</a>    <span class="k">def</span> <span class="nf">exec_python_script</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Choose a python source and execute it &quot;&quot;&quot;</span>
 
         <span class="n">filename</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
@@ -734,21 +734,21 @@
         
         <span class="n">sources</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
 </div>
-<div class="viewcode-block" id="MainWindow.open_python_console"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.open_python_console">[docs]</a>    <span class="k">def</span> <span class="nf">open_python_console</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.open_python_console"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.open_python_console">[docs]</a>    <span class="k">def</span> <span class="nf">open_python_console</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Set focus on the python shell &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">interpreterWidget</span><span class="o">.</span><span class="n">setFocus</span><span class="p">(</span><span class="n">qt</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">ShortcutFocusReason</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">pass</span>
 </div>
-<div class="viewcode-block" id="MainWindow.clear_python_console"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.clear_python_console">[docs]</a>    <span class="k">def</span> <span class="nf">clear_python_console</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.clear_python_console"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.clear_python_console">[docs]</a>    <span class="k">def</span> <span class="nf">clear_python_console</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Clear python shell &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interpreterWidget</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.new_session"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.new_session">[docs]</a>    <span class="k">def</span> <span class="nf">new_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.new_session"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.new_session">[docs]</a>    <span class="k">def</span> <span class="nf">new_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.open_session"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.open_session">[docs]</a>    <span class="k">def</span> <span class="nf">open_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.open_session"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.open_session">[docs]</a>    <span class="k">def</span> <span class="nf">open_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="n">filename</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getOpenFileName</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="s">&quot;OpenAlea Session&quot;</span><span class="p">,</span> <span class="n">qt</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QDir</span><span class="o">.</span><span class="n">homePath</span><span class="p">(),</span> <span class="s">&quot;Session file (*.oas)&quot;</span><span class="p">)</span>
@@ -758,7 +758,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindow.save_session"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.save_session">[docs]</a>    <span class="k">def</span> <span class="nf">save_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.save_session"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.save_session">[docs]</a>    <span class="k">def</span> <span class="nf">save_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Save menu entry &quot;&quot;&quot;</span>
 
         <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session_filename</span><span class="p">):</span>
@@ -766,7 +766,7 @@
         <span class="k">else</span> <span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session_filename</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindow.save_as"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.save_as">[docs]</a>    <span class="k">def</span> <span class="nf">save_as</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.save_as"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.save_as">[docs]</a>    <span class="k">def</span> <span class="nf">save_as</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Save as menu entry &quot;&quot;&quot;</span>
 
         <span class="n">filename</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span>
@@ -777,26 +777,26 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindow.clear_data_pool"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.clear_data_pool">[docs]</a>    <span class="k">def</span> <span class="nf">clear_data_pool</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.clear_data_pool"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.clear_data_pool">[docs]</a>    <span class="k">def</span> <span class="nf">clear_data_pool</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Clear the data pool &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">datapool</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.search_node"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.search_node">[docs]</a>    <span class="k">def</span> <span class="nf">search_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.search_node"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.search_node">[docs]</a>    <span class="k">def</span> <span class="nf">search_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Activated when search line edit is validated &quot;&quot;&quot;</span>
 
         <span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_lineEdit</span><span class="o">.</span><span class="n">text</span><span class="p">())</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;latin1&#39;</span><span class="p">))</span>
         <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pkgmanager</span><span class="o">.</span><span class="n">search_node</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">search_model</span><span class="o">.</span><span class="n">set_results</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindow.find_node"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.find_node">[docs]</a>    <span class="k">def</span> <span class="nf">find_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.find_node"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.find_node">[docs]</a>    <span class="k">def</span> <span class="nf">find_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Find node Command &quot;&quot;&quot;</span>
 
         <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabPackager</span><span class="o">.</span><span class="n">indexOf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">searchview</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tabPackager</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">search_lineEdit</span><span class="o">.</span><span class="n">setFocus</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.open_preferences"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.open_preferences">[docs]</a>    <span class="k">def</span> <span class="nf">open_preferences</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.open_preferences"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.open_preferences">[docs]</a>    <span class="k">def</span> <span class="nf">open_preferences</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Open Preference dialog &quot;&quot;&quot;</span>
         <span class="n">dialog</span> <span class="o">=</span> <span class="n">PreferencesDialog</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -805,14 +805,14 @@
         <span class="c"># ! does not return anythin and do not use ret ?</span>
 
     <span class="c"># Drag and drop support</span></div>
-<div class="viewcode-block" id="MainWindow.dragEnterEvent"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.dragEnterEvent">[docs]</a>    <span class="k">def</span> <span class="nf">dragEnterEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.dragEnterEvent"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.dragEnterEvent">[docs]</a>    <span class="k">def</span> <span class="nf">dragEnterEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;todo&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">mimeData</span><span class="p">()</span><span class="o">.</span><span class="n">hasUrls</span><span class="p">():</span>
             <span class="n">event</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">event</span><span class="o">.</span><span class="n">ignore</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MainWindow.dropEvent"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.dropEvent">[docs]</a>    <span class="k">def</span> <span class="nf">dropEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.dropEvent"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.dropEvent">[docs]</a>    <span class="k">def</span> <span class="nf">dropEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;todo&quot;&quot;&quot;</span>
         <span class="n">urls</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">mimeData</span><span class="p">()</span><span class="o">.</span><span class="n">urls</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
@@ -829,11 +829,11 @@
     <span class="c">############################</span>
     <span class="c"># Handling the Help widget #</span>
     <span class="c">############################</span></div>
-<div class="viewcode-block" id="MainWindow.on_scene_focus_change"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.on_scene_focus_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_scene_focus_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scene</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.on_scene_focus_change"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.on_scene_focus_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_scene_focus_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scene</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">dataflowview</span><span class="o">.</span><span class="n">vertex</span><span class="o">.</span><span class="n">GraphicalVertex</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">helpWidget</span><span class="o">.</span><span class="n">set_rst</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">vertex</span><span class="p">()</span><span class="o">.</span><span class="n">get_tip</span><span class="p">())</span>
 </div>
-<div class="viewcode-block" id="MainWindow.on_package_manager_focus_change"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.on_package_manager_focus_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_package_manager_focus_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.on_package_manager_focus_change"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.on_package_manager_focus_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_package_manager_focus_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="n">pkg_id</span><span class="p">,</span> <span class="n">factory_id</span><span class="p">,</span> <span class="n">mimetype</span> <span class="o">=</span> <span class="n">NodeFactoryView</span><span class="o">.</span><span class="n">get_item_info</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pkg_id</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">factory_id</span><span class="p">)</span> <span class="ow">and</span> <span class="n">mimetype</span> <span class="ow">in</span> <span class="p">[</span><span class="n">NodeFactory</span><span class="o">.</span><span class="n">mimetype</span><span class="p">,</span>
                                                             <span class="n">CompositeNodeFactory</span><span class="o">.</span><span class="n">mimetype</span><span class="p">]:</span>
@@ -845,14 +845,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">helpWidget</span><span class="o">.</span><span class="n">set_rst</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
 
     <span class="c"># Window support</span></div>
-<div class="viewcode-block" id="MainWindow.display_leftpanel"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.display_leftpanel">[docs]</a>    <span class="k">def</span> <span class="nf">display_leftpanel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toggled</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.display_leftpanel"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.display_leftpanel">[docs]</a>    <span class="k">def</span> <span class="nf">display_leftpanel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toggled</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">splitter_2</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">toggled</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="MainWindow.display_rightpanel"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.display_rightpanel">[docs]</a>    <span class="k">def</span> <span class="nf">display_rightpanel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toggled</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.display_rightpanel"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.display_rightpanel">[docs]</a>    <span class="k">def</span> <span class="nf">display_rightpanel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toggled</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">splitter</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">toggled</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindow.to_python_script"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.to_python_script">[docs]</a>    <span class="k">def</span> <span class="nf">to_python_script</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.to_python_script"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.to_python_script">[docs]</a>    <span class="k">def</span> <span class="nf">to_python_script</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Translate the active workspace into a python script&quot;&quot;&quot;</span>
 
         <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabWorkspace</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span>
@@ -864,7 +864,7 @@
             <span class="k">print</span> <span class="s">&quot;BEGIN script&quot;</span>
             <span class="k">print</span> <span class="n">composite_node</span><span class="o">.</span><span class="n">to_script</span><span class="p">(),</span><span class="s">&quot;END script&quot;</span>
 </div>
-<div class="viewcode-block" id="MainWindow.export_image"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.export_image">[docs]</a>    <span class="k">def</span> <span class="nf">export_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.export_image"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.export_image">[docs]</a>    <span class="k">def</span> <span class="nf">export_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Export current workspace to an image &quot;&quot;&quot;</span>
 
         <span class="n">filename</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span>
@@ -892,7 +892,7 @@
         <span class="n">painter</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
         <span class="n">pixmap</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MainWindow.export_image_svg"><a class="viewcode-back" href="../../../contribute/dev/archi/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.export_image_svg">[docs]</a>    <span class="k">def</span> <span class="nf">export_image_svg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MainWindow.export_image_svg"><a class="viewcode-back" href="../../../latest/dev/archi/draft/api_openalea_visualea.html#openalea.visualea.mainwindow.MainWindow.export_image_svg">[docs]</a>    <span class="k">def</span> <span class="nf">export_image_svg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Export current workspace to an image &quot;&quot;&quot;</span>
 
         <span class="n">filename</span> <span class="o">=</span> <span class="n">qt</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span>
@@ -925,9 +925,9 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
       <input type="text" name="q" />
@@ -944,7 +944,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -957,9 +957,9 @@
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2014, INRIA VirtualPlants.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
     </div>
   </body>
 </html>

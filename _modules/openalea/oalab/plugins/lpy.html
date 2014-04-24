@@ -1,0 +1,473 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>openalea.oalab.plugins.lpy &mdash; OpenAleaLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/virtualplants.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="OpenAleaLab 1.0 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for openalea.oalab.plugins.lpy</h1><div class="highlight"><pre>
+<span class="c"># -*- python -*-</span>
+<span class="c">#</span>
+<span class="c">#       LPy manager applet.</span>
+<span class="c">#</span>
+<span class="c">#       OpenAlea.OALab: Multi-Paradigm GUI</span>
+<span class="c">#</span>
+<span class="c">#       Copyright 2013 INRIA - CIRAD - INRA</span>
+<span class="c">#</span>
+<span class="c">#       File author(s): Julien Coste &lt;julien.coste@inria.fr&gt;</span>
+<span class="c">#</span>
+<span class="c">#       File contributor(s):</span>
+<span class="c">#</span>
+<span class="c">#       Distributed under the Cecill-C License.</span>
+<span class="c">#       See accompanying file LICENSE.txt or copy at</span>
+<span class="c">#           http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.html</span>
+<span class="c">#</span>
+<span class="c">#       OpenAlea WebSite : http://openalea.gforge.inria.fr</span>
+<span class="c">#</span>
+<span class="c">###############################################################################</span>
+<span class="n">__revision__</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">openalea.oalab.editor.text_editor</span> <span class="kn">import</span> <span class="n">RichTextEditor</span> <span class="k">as</span> <span class="n">Editor</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.editor.highlight</span> <span class="kn">import</span> <span class="n">Highlighter</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.editor.lpy_lexer</span> <span class="kn">import</span> <span class="n">LPyLexer</span>
+<span class="kn">from</span> <span class="nn">openalea.oalab.control.picklable_curves</span> <span class="kn">import</span> <span class="n">geometry_2_piklable_geometry</span>
+<span class="kn">from</span> <span class="nn">openalea.lpy</span> <span class="kn">import</span> <span class="n">Lsystem</span><span class="p">,</span> <span class="n">AxialTree</span><span class="p">,</span> <span class="n">registerPlotter</span>
+<span class="kn">from</span> <span class="nn">openalea.lpy.gui</span> <span class="kn">import</span> <span class="n">documentation</span> <span class="k">as</span> <span class="n">doc_lpy</span>
+<span class="kn">from</span> <span class="nn">openalea.lpy.__lpy_kernel__</span> <span class="kn">import</span> <span class="n">LpyParsing</span>
+<span class="kn">from</span> <span class="nn">openalea.lpy.gui.objectmanagers</span> <span class="kn">import</span> <span class="n">get_managers</span>
+<span class="kn">from</span> <span class="nn">openalea.lpy.gui.scalar</span> <span class="kn">import</span> <span class="n">ProduceScalar</span>
+<span class="kn">from</span> <span class="nn">openalea.core</span> <span class="kn">import</span> <span class="n">logger</span>
+
+<div class="viewcode-block" id="get_default_text"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.get_default_text">[docs]</a><span class="k">def</span> <span class="nf">get_default_text</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">&quot;&quot;&quot;Axiom:</span>
+
+<span class="s">derivation length: 1</span>
+
+<span class="s">production:</span>
+
+<span class="s">interpretation:</span>
+
+<span class="s">endlsystem</span>
+<span class="s">&quot;&quot;&quot;</span>
+</div>
+<div class="viewcode-block" id="import_lpy_file"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.import_lpy_file">[docs]</a><span class="k">def</span> <span class="nf">import_lpy_file</span><span class="p">(</span><span class="n">script</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract from an &quot;old style&quot; LPy file script part (str) and associated control (dict).</span>
+<span class="sd">    Permit compatibility between LPy and OALab.</span>
+
+<span class="sd">    :param: script to filter (str)</span>
+<span class="sd">    :return: lpy script (str) without end begining with &quot;###### INITIALISATION ######&quot;</span>
+<span class="sd">    and a dict which contain the control (dict)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">control</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">script</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="n">script</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">beginTag</span> <span class="o">=</span> <span class="n">LpyParsing</span><span class="o">.</span><span class="n">InitialisationBeginTag</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">beginTag</span> <span class="ow">in</span> <span class="n">script</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">script</span><span class="p">),</span> <span class="n">control</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">txts</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">script</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">beginTag</span><span class="p">)</span>
+        <span class="n">new_script</span> <span class="o">=</span> <span class="n">txts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">context_to_translate</span> <span class="o">=</span> <span class="n">txts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">Lsystem</span><span class="p">()</span><span class="o">.</span><span class="n">context</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">initialiseFrom</span><span class="p">(</span><span class="n">beginTag</span> <span class="o">+</span> <span class="n">context_to_translate</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Can&#39;t decode lpy file&quot;</span><span class="p">)</span>
+
+        <span class="n">managers</span> <span class="o">=</span> <span class="n">get_managers</span><span class="p">()</span>
+        <span class="n">visualparameters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">scalars</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">functions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">curves</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">geoms</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">lpy_code_version</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;__lpy_code_version__&#39;</span><span class="p">):</span>
+            <span class="n">lpy_code_version</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;__lpy_code_version__&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;__scalars__&#39;</span><span class="p">):</span>
+            <span class="n">scalars_</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;__scalars__&#39;</span><span class="p">]</span>
+            <span class="n">scalars</span> <span class="o">=</span> <span class="p">[</span> <span class="n">ProduceScalar</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">scalars_</span> <span class="p">]</span>
+        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;__functions__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">lpy_code_version</span> <span class="o">&lt;=</span> <span class="mf">1.0</span> <span class="p">:</span>
+            <span class="n">functions</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;__functions__&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">functions</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">n</span>
+            <span class="n">functions</span> <span class="o">=</span> <span class="p">[</span> <span class="n">c</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">functions</span> <span class="p">]</span>
+            <span class="n">funcmanager</span> <span class="o">=</span> <span class="n">managers</span><span class="p">[</span><span class="s">&#39;Function&#39;</span><span class="p">]</span>
+            <span class="n">geoms</span> <span class="o">+=</span> <span class="p">[(</span><span class="n">funcmanager</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span> <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">functions</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;__curves__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">lpy_code_version</span> <span class="o">&lt;=</span> <span class="mf">1.0</span> <span class="p">:</span>
+            <span class="n">curves</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;__curves__&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">curves</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">n</span>
+            <span class="n">curves</span> <span class="o">=</span> <span class="p">[</span> <span class="n">c</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">curves</span> <span class="p">]</span>
+            <span class="n">curvemanager</span> <span class="o">=</span> <span class="n">managers</span><span class="p">[</span><span class="s">&#39;Curve2D&#39;</span><span class="p">]</span>
+            <span class="n">geoms</span> <span class="o">+=</span> <span class="p">[</span> <span class="p">(</span><span class="n">curvemanager</span><span class="p">,</span> <span class="n">curve</span><span class="p">)</span> <span class="k">for</span> <span class="n">curve</span> <span class="ow">in</span> <span class="n">curves</span> <span class="p">]</span>
+        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;__parameterset__&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">panelinfo</span><span class="p">,</span> <span class="n">objects</span> <span class="ow">in</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;__parameterset__&#39;</span><span class="p">]:</span>
+                <span class="k">for</span> <span class="n">typename</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">:</span>
+                    <span class="n">visualparameters</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">managers</span><span class="p">[</span><span class="n">typename</span><span class="p">],</span> <span class="n">obj</span><span class="p">))</span>
+
+        <span class="n">control</span><span class="p">[</span><span class="s">&quot;color map&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">turtle</span><span class="o">.</span><span class="n">getColorList</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">scalar</span> <span class="ow">in</span> <span class="n">scalars</span><span class="p">:</span>
+        	<span class="n">control</span><span class="p">[</span><span class="nb">unicode</span><span class="p">(</span><span class="n">scalar</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span> <span class="o">=</span> <span class="n">scalar</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="n">geom</span><span class="p">)</span> <span class="ow">in</span> <span class="n">geoms</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">geom</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">():</span>
+                <span class="n">new_obj</span><span class="p">,</span> <span class="n">new_name</span> <span class="o">=</span> <span class="n">geometry_2_piklable_geometry</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="n">geom</span><span class="p">)</span>
+                <span class="n">control</span><span class="p">[</span><span class="n">new_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_obj</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="n">geom</span><span class="p">)</span> <span class="ow">in</span> <span class="n">visualparameters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">geom</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">():</span>
+                <span class="n">new_obj</span><span class="p">,</span> <span class="n">new_name</span> <span class="o">=</span> <span class="n">geometry_2_piklable_geometry</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="n">geom</span><span class="p">)</span>
+                <span class="n">control</span><span class="p">[</span><span class="n">new_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_obj</span>
+
+        <span class="k">return</span> <span class="n">new_script</span><span class="p">,</span> <span class="n">control</span>
+</div>
+<div class="viewcode-block" id="LPyApplet"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet">[docs]</a><span class="k">class</span> <span class="nc">LPyApplet</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">default_name</span> <span class="o">=</span> <span class="s">&quot;LSystem&quot;</span>
+    <span class="n">default_file_name</span> <span class="o">=</span> <span class="s">&quot;script.lpy&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;*.lpy&quot;</span>
+    <span class="n">extension</span> <span class="o">=</span> <span class="s">&quot;lpy&quot;</span>
+    <span class="n">icon</span> <span class="o">=</span> <span class="s">&quot;:/images/resources/logo.png&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;script.lpy&quot;</span><span class="p">,</span> <span class="n">script</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LPyApplet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;init LPyApplet&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span> <span class="o">=</span> <span class="n">Editor</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="n">controller</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+        <span class="n">Highlighter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">editor</span><span class="p">,</span> <span class="n">lexer</span><span class="o">=</span><span class="n">LPyLexer</span><span class="p">())</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Begin Highlight inside LPyApplet&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span><span class="o">.</span><span class="n">applet</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">session</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="c"># dict is mutable =D</span>
+        <span class="c"># Usefull if you want change scene_name inside application</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s">&quot;scene_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;lpy_scene&quot;</span>
+
+        <span class="k">if</span> <span class="n">script</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">script</span> <span class="o">=</span> <span class="n">get_default_text</span><span class="p">()</span>
+
+        <span class="n">script</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="n">import_lpy_file</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">project</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">control</span><span class="p">)</span>
+            <span class="c"># for parameter in self.parameters:</span>
+                <span class="c"># if hasattr(self.parameters[parameter], &quot;value&quot;):</span>
+                    <span class="c"># self.parameters[parameter] = self.parameters[parameter].value</span>
+            <span class="n">controller</span><span class="o">.</span><span class="n">project_manager</span><span class="o">.</span><span class="n">_load_control</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span> <span class="o">=</span> <span class="n">Lsystem</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="nb">str</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axialtree</span> <span class="o">=</span> <span class="n">AxialTree</span><span class="p">()</span>
+
+        <span class="n">registerPlotter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;Viewer3D&#39;</span><span class="p">])</span>
+
+        <span class="c"># Link with color map from application</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">project</span><span class="p">,</span> <span class="s">&quot;control&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;color map&quot;</span><span class="p">):</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">control</span><span class="p">[</span><span class="s">&quot;color map&quot;</span><span class="p">]</span> <span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">context</span><span class="p">()</span><span class="o">.</span><span class="n">turtle</span><span class="o">.</span><span class="n">setMaterial</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">interpreter</span><span class="o">.</span><span class="n">locals</span><span class="p">[</span><span class="s">&#39;lsystem&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span>
+
+        <span class="c"># # TODO :</span>
+        <span class="c"># self.session.interpreter.locals[&#39;lstring&#39;] =</span>
+
+<div class="viewcode-block" id="LPyApplet.focus_change"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet.focus_change">[docs]</a>    <span class="k">def</span> <span class="nf">focus_change</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set doc string in Help widget when focus changed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">doc_lpy</span><span class="o">.</span><span class="n">getSpecification</span><span class="p">()</span>
+
+        <span class="n">txt</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">&lt;H1&gt;&lt;IMG SRC=</span><span class="si">%s</span><span class="s"></span>
+<span class="s"> ALT=&quot;icon&quot;</span>
+<span class="s"> HEIGHT=25</span>
+<span class="s"> WIDTH=25</span>
+<span class="s"> TITLE=&quot;LPy logo&quot;&gt;L-Py&lt;/H1&gt;&quot;&quot;&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">icon</span><span class="p">)</span> <span class="o">+</span> <span class="n">txt</span><span class="p">[</span><span class="mi">13</span><span class="p">:]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;HelpWidget&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LPyApplet.widget"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet.widget">[docs]</a>    <span class="k">def</span> <span class="nf">widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the edition widget</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widget</span>
+</div>
+<div class="viewcode-block" id="LPyApplet.run_selected_part"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet.run_selected_part">[docs]</a>    <span class="k">def</span> <span class="nf">run_selected_part</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run selected code like a PYTHON code (not LPy code).</span>
+<span class="sd">        If nothing selected, run like LPy (not Python).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">get_selected_text</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">code</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">interp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">get_interpreter</span><span class="p">()</span>
+            <span class="c"># user_ns = self.session.interpreter.user_ns</span>
+            <span class="n">interp</span><span class="o">.</span><span class="n">runcode</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LPyApplet.run"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run/iterate all the code (LPy and not PYTHON).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># Get code from application</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">get_text</span><span class="p">())</span>
+        <span class="c"># Get control</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">control</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">],</span> <span class="s">&quot;value&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">setCode</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axialtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">iterate</span><span class="p">()</span>
+
+        <span class="n">new_scene</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">sceneInterpretation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">axialtree</span><span class="p">)</span>
+        <span class="n">scene_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s">&quot;scene_name&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">scene</span><span class="p">[</span><span class="n">scene_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_scene</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;Viewer3D&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update_radius</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="LPyApplet.step"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Increase current lsystem from one step</span>
+<span class="sd">        If you set i, lsystem will go to step number i.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c"># Get code from application</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">get_text</span><span class="p">())</span>
+
+        <span class="c"># If code has changed since the last step</span>
+        <span class="k">if</span> <span class="n">code</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">:</span>
+            <span class="c"># /!\ setCode method set the getLastIterationNb to zero</span>
+            <span class="c"># So, if you change code, next step will do a &#39;reinit()&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">control</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">],</span> <span class="s">&quot;value&quot;</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">setCode</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">code</span>
+
+        <span class="c"># if you are at derivation length, reinit</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">getLastIterationNb</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">derivationLength</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c"># clasical case: evolve one step</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axialtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">iterate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">getLastIterationNb</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="c"># if you set i to a number, directly go to this step.</span>
+        <span class="c"># it is used with i=0 to reinit</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axialtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">iterate</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="n">new_scene</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">sceneInterpretation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">axialtree</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">new_scene</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">scene</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">[</span><span class="s">&quot;scene_name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">new_scene</span>
+</div>
+<div class="viewcode-block" id="LPyApplet.stop"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># TODO : to implement</span>
+        <span class="c"># print &quot;stop lpy&quot;</span>
+        <span class="c"># self.lsystem.early_return = True</span>
+        <span class="c"># self.lsystem.forceRelease()</span>
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="LPyApplet.animate"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet.animate">[docs]</a>    <span class="k">def</span> <span class="nf">animate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Get code from application</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span><span class="o">.</span><span class="n">get_text</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">control</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">],</span> <span class="s">&quot;value&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">setCode</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">animate</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">applets</span><span class="p">[</span><span class="s">&#39;Viewer3D&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update_radius</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="LPyApplet.reinit"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet.reinit">[docs]</a>    <span class="k">def</span> <span class="nf">reinit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="LPyApplet2"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet2">[docs]</a><span class="k">class</span> <span class="nc">LPyApplet2</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">default_name</span> <span class="o">=</span> <span class="s">&quot;LSystem&quot;</span>
+    <span class="n">default_file_name</span> <span class="o">=</span> <span class="s">&quot;script.lpy&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;*.lpy&quot;</span>
+    <span class="n">extension</span> <span class="o">=</span> <span class="s">&quot;lpy&quot;</span>
+    <span class="n">icon</span> <span class="o">=</span> <span class="s">&quot;:/images/resources/logo.png&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;script.lpy&quot;</span><span class="p">,</span> <span class="n">script</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LPyApplet2</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;init LPyApplet&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intrepreter</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">interpreter</span>
+        <span class="c"># dict is mutable =D</span>
+        <span class="c"># Usefull if you want change scene_name inside application</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;scene_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;lpy_scene&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span> <span class="o">=</span> <span class="n">Lsystem</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axialtree</span> <span class="o">=</span> <span class="n">AxialTree</span><span class="p">()</span>
+
+        <span class="n">script</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="n">import_lpy_file</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">script</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">get_default_text</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">control</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LPyApplet2.focus_change"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet2.focus_change">[docs]</a>    <span class="k">def</span> <span class="nf">focus_change</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set doc string in Help widget when focus changed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">doc_lpy</span><span class="o">.</span><span class="n">getSpecification</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">txt</span>
+</div>
+<div class="viewcode-block" id="LPyApplet2.run_selected_part"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet2.run_selected_part">[docs]</a>    <span class="k">def</span> <span class="nf">run_selected_part</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txt</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run selected code like a PYTHON code (not LPy code).</span>
+<span class="sd">        If nothing selected, run like LPy (not Python).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">interpreter</span><span class="o">.</span><span class="n">runcode</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="LPyApplet2.run"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet2.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run/iterate all the code (LPy and not PYTHON).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">],</span> <span class="s">&quot;value&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">setCode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axialtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">iterate</span><span class="p">()</span>
+        <span class="n">new_scene</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">sceneInterpretation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">axialtree</span><span class="p">)</span>
+        <span class="n">scene_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;scene_name&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">scene_name</span><span class="p">,</span> <span class="n">new_scene</span>
+</div>
+<div class="viewcode-block" id="LPyApplet2.step"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet2.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Increase current lsystem from one step</span>
+<span class="sd">        If you set i, lsystem will go to step number i.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">],</span> <span class="s">&quot;value&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">setCode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+
+        <span class="c"># if you are at derivation length, reinit</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">getLastIterationNb</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">derivationLength</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c"># clasical case: evolve one step</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axialtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">iterate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">getLastIterationNb</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="c"># if you set i to a number, directly go to this step.</span>
+        <span class="c"># it is used with i=0 to reinit</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axialtree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">iterate</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="n">new_scene</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">sceneInterpretation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">axialtree</span><span class="p">)</span>
+        <span class="n">scene_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s">&quot;scene_name&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">scene_name</span><span class="p">,</span> <span class="n">new_scene</span>
+</div>
+<div class="viewcode-block" id="LPyApplet2.stop"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet2.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># TODO : to implement</span>
+        <span class="c"># self.lsystem.early_return = True</span>
+        <span class="c"># self.lsystem.forceRelease()</span>
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="LPyApplet2.animate"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet2.animate">[docs]</a>    <span class="k">def</span> <span class="nf">animate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Get code from application</span>
+        <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">],</span> <span class="s">&quot;value&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">setCode</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="n">scene_name</span><span class="p">,</span> <span class="n">new_scene</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lsystem</span><span class="o">.</span><span class="n">animate</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">scene_name</span><span class="p">,</span> <span class="n">new_scene</span>
+</div>
+<div class="viewcode-block" id="LPyApplet2.reinit"><a class="viewcode-back" href="../../../../latest/dev/archi/apidoc/oalab/openalea.oalab.plugins.html#openalea.oalab.plugins.lpy.LPyApplet2.reinit">[docs]</a>    <span class="k">def</span> <span class="nf">reinit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">OpenAleaLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, INRIA VirtualPlants.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3a0.
+    </div>
+  </body>
+</html>
