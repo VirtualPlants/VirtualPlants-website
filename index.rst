@@ -54,11 +54,9 @@ Project List
     .. toctree::
         :maxdepth: 1
         :caption: How to:
+        :glob:
 
-        guidelines/register
-        guidelines/versioning
-        guidelines/deploy
-        guidelines/documentation
+        guidelines/*
 
 Project Guidelines
 ------------------
