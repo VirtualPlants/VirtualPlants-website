@@ -1,6 +1,6 @@
-==================
-OpenAlea community
-==================
+========
+OpenAlea
+========
 
 .. container:: custom-float-left
 
@@ -22,7 +22,7 @@ OpenAlea includes modules to analyse, visualize and model the functioning and gr
 
 .. container:: custom-float-right
 
-    Search box
+    `Search box <searchbox.html>`_
 
 Project List
 ------------
@@ -64,7 +64,8 @@ Project Guidelines
 A project is a single unit of development in the community. It can contain a single
 script to analyse some data up to a full library of models and complex tutorials
 to simulate plant growth for example. No assumptions are made on the content of
-a project, the programming language used or its finality.
+a project, the programming language used or its finality. However, most documentation
+refer to `Python <https://www.python.org/>`__ as the main programming language.
 
 Projects are owned by a single user but can be seen by a restricted set of users
 or the whole community. They can be stored on the community versioning system, github
