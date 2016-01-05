@@ -1,2 +1,0 @@
-
-.. include:: sphinx-gh.rst

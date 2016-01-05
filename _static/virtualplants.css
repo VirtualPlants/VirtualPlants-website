@@ -1,6 +1,11 @@
 
 @import url(nature.css);
 
+div.body {
+    margin: auto;
+    width: 800px;
+}
+
 div.body h1 {
     margin-left: -10px;
     color: rgb(65, 100, 18);
@@ -44,6 +49,12 @@ div.code-block-filename {
 .custom-float-right {
     margin: 20px;
     float: right;
+}
+
+.section-end {
+    clear: both;
+    border-style: solid;
+    border-width: 1px 0px 0px 0px;
 }
 
 .note {

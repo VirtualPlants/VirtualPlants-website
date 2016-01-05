@@ -5,4 +5,5 @@ _scripts/gh-pages.py
 .DS_Store
 *.pyc
 *~
+.idea
 

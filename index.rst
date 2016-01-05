@@ -2,83 +2,81 @@
 OpenAlea community
 ==================
 
-OpenAlea is an open source project primarily aimed at the plant research community. 
-It is a distributed collaborative effort to develop Python libraries and tools that address the needs of current and future works in Plant Architecture modeling. 
-OpenAlea includes modules to analyse, visualize and model the functioning and growth of plant architecture. 
+.. container:: custom-float-left
 
+    .. image:: images/openalea_web.png
+        :height: 120px
+        :align:   center
 
-OpenAleaLab
------------
+Community
+---------
+
+OpenAlea is an open source project primarily aimed at the plant research community.
+It is a distributed collaborative effort to develop Python libraries and tools that address the needs of
+current and future works in Plant Architecture modeling.
+OpenAlea includes modules to analyse, visualize and model the functioning and growth of plant architecture.
+
+.. container:: section-end
+
+    ..
 
 .. container:: custom-float-right
 
-    .. image:: images/oalab2013-10-16.png
-        :height: 200px
-        :align:   center
+    Search box
 
-OpenAleaLab is a multi-paradigm modeling environment for plants.
-It will permit to divide the modeller’s work into multiple tasks. Each task can be viewed as a virtual experiment.
-OpenAleaLab is based on `OpenAlea Library <http://openalea.gforge.inria.fr>`_.
+Project List
+------------
 
+.. list-table:: Sample of projects
 
-.. toctree::
-    :maxdepth: 2
+        - * .. image:: images/oalab_icon.png
+                :width: 100px
+                :target: projects/oalab
+          * .. image:: images/plantgl_icon.png
+                :width: 100px
+                :target: projects/plantgl
+          * .. image:: images/mars-alt_icon.png
+                :width: 100px
+                :target: projects/mars-alt
+          * link
 
-    install/index
-    latest/overview/index
-    latest/user/index
+        - * OALab
+          * PlantGL
+          * Mars-Alt
+          * more
 
-How to contribute
-~~~~~~~~~~~~~~~~~
+.. container:: section-end
 
-.. toctree::
-    :maxdepth: 1
+    ..
 
-    contribute/devel/git-workflow
+.. container:: custom-float-left
 
-.. toctree::
-    :maxdepth: 1
+    .. toctree::
+        :maxdepth: 1
+        :caption: How to:
 
-    contribute/documentation/index
-    contribute/todo/index
-    contribute/devel/guidelines
-    contribute/devel/git-svn
-    contribute/devel/testing
+        guidelines/register
+        guidelines/versioning
+        guidelines/deploy
+        guidelines/documentation
 
+Project Guidelines
+------------------
 
-Other projects
-~~~~~~~~~~~~~~
+A project is a single unit of development in the community. It can contain a single
+script to analyse some data up to a full library of models and complex tutorials
+to simulate plant growth for example. No assumptions are made on the content of
+a project, the programming language used or its finality.
 
-.. toctree::
-    :maxdepth: 1
-    :glob:
+Projects are owned by a single user but can be seen by a restricted set of users
+or the whole community. They can be stored on the community versioning system, github
+or any personal solution the owner choose to use.
 
-    contribute/devel/project/*
+.. container:: section-end
 
-
-Developer documentation
-~~~~~~~~~~~~~~~~~~~~~~~
-
-OpenAleaLab and OpenAlea concepts
-
-.. toctree::
-    :maxdepth: 1
-
-    latest/dev/archi/index
-    latest/dev/archi/api_plugin
-    latest/dev/archi/api_project
-    latest/dev/archi/api_model
-    latest/dev/archi/api_node
-    latest/dev/archi/api_control
-    latest/dev/archi/api_observer
-    latest/dev/archi/api_gui_application
-
-Developer documents
+    ..
 
 .. toctree::
-    :maxdepth: 1
+     :maxdepth: 1
 
-    latest/dev/index
-    latest/dev/peps/index
-    latest/dev/commandline
-    latest/glossary
+     toc
