@@ -31,19 +31,19 @@ Project List
 
         - * .. image:: images/oalab_icon.png
                 :width: 100px
-                :target: projects/oalab
+                :target: projects/oalab.html
           * .. image:: images/plantgl_icon.png
                 :width: 100px
-                :target: projects/plantgl
+                :target: projects/plantgl.html
           * .. image:: images/mars-alt_icon.png
                 :width: 100px
-                :target: projects/mars-alt
-          * link
+                :target: projects/mars-alt.html
+          * `... <...>`_
 
-        - * OALab
-          * PlantGL
-          * Mars-Alt
-          * more
+        - * `OALab <projects/oalab.html>`_
+          * `PlantGL <projects/plantgl.html>`_
+          * `Mars-Alt <projects/mars-alt.html>`_
+          * `more <...>`_
 
 .. container:: section-end
 
@@ -75,8 +75,3 @@ or any personal solution the owner choose to use.
 .. container:: section-end
 
     ..
-
-.. toctree::
-     :maxdepth: 1
-
-     toc
