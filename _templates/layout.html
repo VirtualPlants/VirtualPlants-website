@@ -1,0 +1,16 @@
+{% extends "!layout.html" %}
+
+{% block relbar1 %}
+<ul id="relbar1-list">
+    <li><a href="{{ pathto('index') }}">
+        <img src="{{ pathto('_static/openalea_icon32.png', 1) }}" width="32" height="32"/>
+        </a>
+    </li>
+    <li><a href="{{ pathto('documentation') }}">Documentation</a></li>
+    <li><a href="{{ pathto('screenshots') }}">Screenshots</a></li>
+    <li><a href="{{ pathto('project') }}">Projects</a></li>
+</ul>
+{% endblock %}
+{% block relbar2 %}{% endblock %}
+{% block sidebar1 %}{% endblock %}
+{% block sidebar2 %}{% endblock %}

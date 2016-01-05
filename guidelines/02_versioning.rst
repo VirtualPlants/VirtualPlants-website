@@ -24,6 +24,8 @@ Git workflow
   - :ref:`workflow-github` (standard github workflow)
   - :ref:`workflow-gforge` (standard gforge workflow)
 
+`scikit workflow <http://scikit-image.org/docs/stable/contribute.html>`_
+
 Tips & doc
 ----------
 

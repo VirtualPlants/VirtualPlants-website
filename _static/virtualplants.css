@@ -1,6 +1,15 @@
 
 @import url(nature.css);
 
+ul#relbar1-list li {
+    display: inline;
+    padding: 0 2em 0 0;
+}
+
+ul#relbar1-list li a {
+    color: #bbbbbb;
+}
+
 div.body {
     margin: auto;
     width: 800px;

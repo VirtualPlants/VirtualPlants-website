@@ -30,13 +30,13 @@ Project List
 .. list-table:: Sample of projects
 
         - * .. image:: images/oalab_icon.png
-                :width: 100px
+                :width: 150px
                 :target: projects/oalab.html
           * .. image:: images/plantgl_icon.png
-                :width: 100px
+                :width: 150px
                 :target: projects/plantgl.html
           * .. image:: images/mars-alt_icon.png
-                :width: 100px
+                :width: 150px
                 :target: projects/mars-alt.html
           * `... <...>`_
 

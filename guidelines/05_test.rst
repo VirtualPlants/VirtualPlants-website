@@ -46,7 +46,6 @@ must begin with ``Test``.
  .. code-block:: python
 
     # A simple test function
-
     def test_func():
         x = do_computation()  # must return 2
         assert x == 2
