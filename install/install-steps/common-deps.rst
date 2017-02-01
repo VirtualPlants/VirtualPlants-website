@@ -10,10 +10,22 @@ If not yet installed, install external dependencies:
 
   sudo apt-get install python-pip scons zlib1g-dev libpng12-dev python-qt4
 
-On ubuntu 14.04, you need to install ipython manually because packaged version is too old.
+Install IPython et Qtconsole:
 
-  - IPython 2.4.1
-  - IPython Qt console
+  - IPython 2.4.1 (apt: ipython)
+  - IPython Qtconsole (apt: ipython-qtconsole)
+
+.. warning::
+
+  On ubuntu 16.04, you DONT need to install ipython manually because packaged version is the required one.
+
+.. code-block:: bash
+
+  sudo apt-get install ipython ipython-qtconsole
+
+.. warning::
+
+  On ubuntu 14.04, you need to install ipython manually because packaged version is too old.
 
 .. code-block:: bash
 
